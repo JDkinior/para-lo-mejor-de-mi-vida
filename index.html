@@ -180,6 +180,13 @@
       height: 100lvh;
     }
 
+    /* `overflow: hidden` en un elemento fixed conserva en Chrome Android el
+       rectángulo de recorte previo mientras el dedo sigue desplazando. El
+       degradado interior ya tiene sus propios límites, así que evitamos ese clip. */
+    #masterRomanticAtmosphere {
+      overflow: visible;
+    }
+
     /* Partículas de brillo animadas en el fondo del sobre */
     @keyframes sparkleFloat {
       0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
