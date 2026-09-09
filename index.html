@@ -645,17 +645,16 @@
       border: 1px solid rgba(251, 191, 36, 0.38);
     }
 
-    /* Portada móvil: el contenido oculto no debe reservar una pantalla vacía. */
+    /* Portada móvil fluida y natural */
     @media (max-width: 640px) {
       #heroEnvelope {
-        /* Da espacio real a la secuencia de apertura antes de llegar al álbum. */
-        min-height: 220svh !important;
+        min-height: 140svh !important;
       }
       #envelopeStickyStage {
         min-height: 100svh;
-        height: 100svh;
+        height: auto;
         justify-content: center;
-        padding-top: max(0.5rem, env(safe-area-inset-top));
+        padding-top: max(3.5rem, env(safe-area-inset-top));
         padding-bottom: 2rem;
       }
       #envelopeIntroPrompt {
@@ -670,20 +669,17 @@
       }
       #envelopeStickyStage > .relative.w-full.max-w-4xl {
         min-height: 0;
-        height: min(58svh, 360px);
-        flex: none;
+        height: auto;
+        width: 100%;
       }
       #heroEmergingContent {
-        /* La felicitación abierta necesita el alto completo de la pantalla;
-           el escenario del sobre es más bajo y antes recortaba el contador. */
-        position: fixed;
-        inset: 0;
+        position: relative;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-top: 4.5rem;
-        padding-bottom: 1.5rem;
-        pointer-events: none;
+        padding-top: 0.5rem;
+        padding-bottom: 1rem;
       }
       #heroEmergingContent button,
       #heroEmergingContent a {
@@ -1084,7 +1080,7 @@
   <!-- ========================================================================= -->
   <!-- 🌟 CONTENIDO PRINCIPAL: FLUYE DIRECTAMENTE TRAS ABRIR EL SOBRE            -->
   <!-- ========================================================================= -->
-  <main id="revealedMainContent" class="relative z-10 transition-opacity duration-700">
+  <main id="revealedMainContent" class="relative z-10">
 
     <!-- ========================================== -->
     <!-- 2. ÁLBUM POLAROID & SCRAPBOOK              -->
@@ -1706,13 +1702,15 @@
   </div>
 
   <!-- MODAL: LIGHTBOX DE FOTO -->
-  <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeLightbox(event)">
-    <div class="relative max-w-xl w-full bg-white dark:bg-stone-900 rounded-3xl p-4 shadow-2xl" onclick="event.stopPropagation()">
-      <button onclick="closeLightbox()" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold shadow-lg">✕</button>
-      <img id="lightboxImg" src="" alt="Recuerdo" class="w-full max-h-[60vh] object-contain rounded-2xl">
-      <div class="mt-3 text-center">
-        <h4 id="lightboxTitle" class="font-serif text-2xl font-bold text-stone-800 dark:text-rose-100">Título</h4>
-        <p id="lightboxDesc" class="text-xs sm:text-sm font-semibold text-rose-600 dark:text-rose-400 mt-1 uppercase tracking-wider">Descripción</p>
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeLightbox(event)">
+    <div class="relative max-w-xl w-full bg-white rounded-3xl p-4 sm:p-6 shadow-2xl border border-stone-200/90 ring-1 ring-black/5" onclick="event.stopPropagation()">
+      <button onclick="closeLightbox()" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center font-bold shadow-lg transition active:scale-95" aria-label="Cerrar">✕</button>
+      <div class="overflow-hidden rounded-2xl bg-stone-100 shadow-inner">
+        <img id="lightboxImg" src="" alt="Recuerdo" class="w-full max-h-[60vh] object-contain rounded-2xl">
+      </div>
+      <div class="mt-4 text-center">
+        <h4 id="lightboxTitle" class="font-serif text-2xl sm:text-3xl font-bold text-stone-800">Título</h4>
+        <p id="lightboxDesc" class="text-xs sm:text-sm font-semibold text-rose-600 mt-1 uppercase tracking-wider">Descripción</p>
       </div>
     </div>
   </div>
@@ -2336,17 +2334,7 @@
           const ty = (1 - easeHero) * 65;
           const sc = 0.90 + easeHero * 0.10;
           heroContent.style.transform = `translateY(${ty}px) scale(${sc})`;
-          // En móvil la capa ocupa todo el viewport: no debe interceptar el
-          // gesto de scroll. Sus botones conservan pointer-events: auto por CSS.
-          heroContent.style.pointerEvents = window.matchMedia('(max-width: 640px)').matches ? 'none' : (easeHero > 0.7 ? 'auto' : 'none');
-          // Permanece durante la apertura y se retira solo al final del tramo
-          // de la portada, antes de que el álbum entre en pantalla.
-          if (p > 0.86) {
-            const exit = Math.min(1, (p - 0.86) / 0.14);
-            heroContent.style.opacity = Math.max(0, easeHero * (1 - exit));
-            heroContent.style.transform = `translateY(${-20 - exit * 45}px) scale(${1 - exit * 0.03})`;
-            heroContent.style.pointerEvents = 'none';
-          }
+          heroContent.style.pointerEvents = easeHero > 0.6 ? 'auto' : 'none';
         } else {
           heroContent.style.opacity = '0';
           heroContent.style.transform = 'translateY(65px) scale(0.90)';
