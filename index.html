@@ -1440,10 +1440,10 @@
         </div>
 
         <div id="quizFinishedScreen" class="hidden text-center py-6">
-          <div class="text-4xl mb-2">🏆❤️</div>
+          <div class="text-4xl mb-2">❤️</div>
           <h4 class="font-serif text-xl sm:text-2xl font-bold text-rose-100">¡Quiz Terminado!</h4>
           <p id="quizScoreText" class="text-sm text-rose-300 mt-1 font-medium">Puntuación: 4/4</p>
-          <p class="text-xs text-stone-400 mt-1 italic">"¡Definitivamente nacimos el uno para el otro!"</p>
+          <p class="text-xs text-stone-400 mt-1 italic">"Eres el amor de mi vida"</p>
           <span class="inline-block mt-3 text-[11px] font-bold text-amber-300 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-500/30">
             Desafío 2 Superado ✨
           </span>
@@ -1467,9 +1467,6 @@
             <p class="text-[7.5px] sm:text-[9px] text-rose-400 pixel-font mt-0.5 tracking-tight">CARTA CELESTE • 6 MESES</p>
           </div>
           <div class="flex items-center gap-1 shrink-0">
-            <button id="pixelGuideToggleBtn" onclick="togglePixelGuide()" class="pixel-font text-[7px] sm:text-[8.5px] bg-rose-950/80 text-rose-300 border border-rose-700/60 px-2 py-1 rounded-lg hover:bg-rose-900 transition active:scale-95 whitespace-nowrap" title="Activar/Desactivar líneas guía de ayuda">
-              GUÍA: ON
-            </button>
             <span id="constellationProgressBadge" class="pixel-font text-[7px] sm:text-[8.5px] bg-amber-950/80 text-amber-300 border border-amber-500/50 px-2 py-1 rounded-lg shadow-sm whitespace-nowrap">
               PASO 1/8
             </span>
@@ -2017,40 +2014,40 @@
             "Apenas te conozco y ya me estas haciendo feliz, ¿Cómo lo haces?"
           ],
           correct: 2,
-          explanation: "¡Exacto! Esas fueron mis palabras en ese momento tan especial e inolvidable."
+          explanation: "Te lo dije porque tus ojos se me hicieron lindos, y tu dijiste que eran normales"
         },
         {
-          question: "¿Qué lugar se convierte en mi favorito cuando estamos juntos?",
+          question: "¿Cuál fue el primer apodo que me pusiste en whatsapp?",
           options: [
-            "El restaurante más lujoso",
-            "Cualquier sitio del mundo, siempre que estés a mi lado",
-            "Un cine a oscuras",
-            "Una plaza lejana"
+            "Corazón",
+            "Cielito",
+            "Amorcito",
+            "Jorge"
           ],
           correct: 1,
-          explanation: "¡Exacto! Tú haces que cualquier lugar se sienta como hogar."
+          explanation: "No te imaginas cuanto me emocioné al saberlo, me sentí tan especial"
         },
         {
-          question: "¿Quién ama más a quién en esta relación?",
+          question: "¿Qué comimos la primera vez que salimos juntos?",
           options: [
-            "Tú a mí",
-            "Yo a ti infinitamente más",
-            "Los dos en un empate de amor incondicional",
-            "Es un amor tan inmenso que desafía cualquier cálculo"
+            "Helado de doña leche",
+            "Conos de Pizza",
+            "Mazorcada y hamburguesa",
+            "Crepes con nutella y fresas"
           ],
           correct: 3,
-          explanation: "¡Así es! Nuestro cariño no cabe en ninguna medida humana."
+          explanation: "No te terminaste el tuyo y casi me muero por el azucar"
         },
         {
-          question: "¿Qué es lo que más deseo para nuestros próximos meses?",
+          question: "¿De qué color fueron las flores que te regalé por primera vez?",
           options: [
-            "Seguir creando recuerdos mágicos e inolvidables",
-            "Verte cumplir cada uno de tus sueños y apoyarte siempre",
-            "Hacerte la mujer más feliz cada día",
-            "¡Todo eso y una vida entera a tu lado!"
+            "Amarillas con Verde",
+            "Blanco con morado",
+            "Rojas y rosas",
+            "Blanco con azul"
           ],
-          correct: 3,
-          explanation: "¡Acertaste! Quiero todo eso y un millón de momentos más a tu lado."
+          correct: 1,
+          explanation: "Creaste una carpeta que dice florecitas, ahí guardaste esa foto"
         }
       ],
 
@@ -2093,7 +2090,7 @@
     // Incrementar este número cada vez que cambie contenido en DEFAULT_CONFIG
     // (carta, razones, cumplidos, citas, línea de tiempo, firma, etc.)
     // Eso forzará a que el navegador use los valores nuevos del código.
-    const CONFIG_VERSION = 6;
+    const CONFIG_VERSION = 8;
 
     window.LOVE_CONFIG = loadStoredConfig();
 
@@ -3295,7 +3292,7 @@
         quizScore++;
         playSparkleSound();
         feedback.className = "mt-3 p-3 rounded-xl text-xs font-medium bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800";
-        feedback.innerHTML = `✨ <strong>¡Correcto!</strong> ${q.explanation}`;
+        feedback.innerHTML = `<strong>¡Correcto!</strong> ${q.explanation}`;
       } else {
         feedback.className = "mt-3 p-3 rounded-xl text-xs font-medium bg-rose-50 dark:bg-rose-950/60 text-rose-200 border border-rose-200 dark:border-rose-800";
         feedback.innerHTML = `❤️ <strong>¡Casi!</strong> La mejor respuesta: "${q.options[q.correct]}". ${q.explanation}`;
@@ -3336,7 +3333,6 @@
     ];
 
     let pixelConstellationStep = 0; // 0 to 8
-    let showPixelGuide = true;
     let isPixelLoopActive = false;
     let pixelParticles = [];
     let bgPixelStars = [];
@@ -3380,18 +3376,6 @@
         isPixelLoopActive = true;
         requestAnimationFrame(renderPixelConstellationFrame);
       }
-    }
-
-    function togglePixelGuide() {
-      showPixelGuide = !showPixelGuide;
-      const btn = document.getElementById('pixelGuideToggleBtn');
-      if (btn) {
-        btn.textContent = showPixelGuide ? 'GUÍA: ON' : 'GUÍA: OFF';
-        btn.className = showPixelGuide 
-          ? "pixel-font text-[7px] sm:text-[8.5px] bg-rose-950/80 text-rose-300 border border-rose-700/60 px-2 py-1 rounded-lg hover:bg-rose-900 transition active:scale-95 whitespace-nowrap"
-          : "pixel-font text-[7px] sm:text-[8.5px] bg-stone-900/80 text-stone-400 border border-stone-700/60 px-2 py-1 rounded-lg hover:bg-stone-800 transition active:scale-95 whitespace-nowrap";
-      }
-      playPopSound();
     }
 
     function handlePixelCanvasPointer(e) {
@@ -3456,7 +3440,7 @@
         triggerHapticFeedback();
         const expectedStar = PIXEL_STARS.find(s => s.id === expectedNextId);
         if (textEl && expectedStar) {
-          textEl.innerHTML = `<span class="text-rose-400 font-bold">✨ Sigue la guía:</span> Toca primero la estrella <span class="text-amber-300 font-bold">[${expectedStar.label}] ${expectedStar.name}</span> para formar la constelación.`;
+          textEl.innerHTML = `<span class="text-rose-400 font-bold">✨ Siguiente estrella:</span> Toca primero la estrella <span class="text-amber-300 font-bold">[${expectedStar.label}] ${expectedStar.name}</span> para formar la constelación.`;
         }
       } else {
         playRetroStarChime(star.id);
@@ -3686,29 +3670,6 @@
         }
       }
 
-      // 5. Líneas de Guía (si showPixelGuide está activo)
-      if (showPixelGuide && pixelConstellationStep < 8) {
-        ctx.save();
-        ctx.setLineDash([2, 3]);
-        ctx.strokeStyle = 'rgba(244, 63, 94, 0.28)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(100, 58);
-        ctx.lineTo(68, 36);
-        ctx.lineTo(38, 68);
-        ctx.lineTo(100, 156);
-        ctx.lineTo(162, 68);
-        ctx.lineTo(132, 36);
-        ctx.closePath();
-        ctx.stroke();
-
-        ctx.strokeStyle = 'rgba(251, 191, 36, 0.28)';
-        ctx.beginPath();
-        ctx.moveTo(26, 142);
-        ctx.lineTo(174, 26);
-        ctx.stroke();
-        ctx.restore();
-      }
 
       // 6. Resplandor latente del corazón cuando ya se completó el lazo (paso >= 6)
       if (pixelConstellationStep >= 6) {
