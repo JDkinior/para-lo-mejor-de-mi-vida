@@ -1574,7 +1574,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 10. VALES DE AMOR CANJEABLES VIP           -->
+    <!-- 9. VALES DE AMOR CANJEABLES VIP            -->
     <!-- ========================================== -->
     <section id="cupones" class="max-w-4xl mx-auto px-4 py-14 bg-rose-950/30 rounded-3xl my-6 border border-rose-800/30">
       <div class="text-center max-w-md mx-auto mb-8">
@@ -1943,15 +1943,6 @@
         }
       ],
 
-      bucketList: [
-        { text: "Hacer un picnic al atardecer en el parque", completed: true },
-        { text: "Ver una noche entera de estrellas juntos", completed: false },
-        { text: "Viajar a la playa y caminar en la arena tomados de la mano", completed: false },
-        { text: "Cocinar una cena italiana desde cero juntos", completed: true },
-        { text: "Maratón de películas con manta y palomitas", completed: true },
-        { text: "Celebrar nuestro primer año de novios", completed: false }
-      ],
-
       compliments: [
         "Amo la forma en la que tus ojitos brillan cuando te sientes feliz.",
         "Tienes el corazón más dulce, noble y comprensivo que jamás he conocido.",
@@ -2053,7 +2044,7 @@
     // Incrementar este número cada vez que cambie contenido en DEFAULT_CONFIG
     // (carta, razones, cumplidos, citas, línea de tiempo, firma, etc.)
     // Eso forzará a que el navegador use los valores nuevos del código.
-    const CONFIG_VERSION = 16;
+    const CONFIG_VERSION = 17;
 
     window.LOVE_CONFIG = loadStoredConfig();
 
@@ -2073,7 +2064,6 @@
               whatsappNumber:  parsed.whatsappNumber  || DEFAULT_CONFIG.whatsappNumber,
               startDate:       parsed.startDate       || DEFAULT_CONFIG.startDate,
               bgMusicUrl:      parsed.bgMusicUrl      || DEFAULT_CONFIG.bgMusicUrl,
-              bucketList:      parsed.bucketList      || DEFAULT_CONFIG.bucketList,
             };
             // Corregir fecha incorrecta heredada
             if (userPrefs.startDate === "2026-03-08T00:00:00") {
@@ -2132,7 +2122,6 @@
       renderReasons();
       renderTimeline();
       renderCoupons();
-      renderBucketList();
       initBackgroundMusic();
       initMemoryGame();
       initQuizGame();
@@ -2965,52 +2954,6 @@
         }
       }
     });
-
-    /* =========================================================
-     * BUCKET LIST
-     * ========================================================= */
-    function renderBucketList() {
-      const container = document.getElementById('bucketListContainer');
-      const list = window.LOVE_CONFIG.bucketList;
-
-      container.innerHTML = list.map((item, idx) => `
-        <div class="flex items-center justify-between p-3 rounded-2xl ${item.completed ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800' : 'bg-white/70 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900'} transition">
-          <label class="flex items-center gap-2.5 cursor-pointer flex-1">
-            <input type="checkbox" onchange="toggleBucketItem(${idx})" ${item.completed ? 'checked' : ''} class="w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-rose-300">
-            <span class="text-xs font-medium ${item.completed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-rose-100'}">${item.text}</span>
-          </label>
-          ${item.completed ? '<span class="text-[10px] text-emerald-600 font-bold ml-1">¡Logrado! ✨</span>' : ''}
-        </div>
-      `).join('');
-
-      const completedCount = list.filter(i => i.completed).length;
-      const percent = list.length ? (completedCount / list.length) * 100 : 0;
-      document.getElementById('bucketProgressText').textContent = `${completedCount} de ${list.length}`;
-      document.getElementById('bucketProgressBar').style.width = `${percent}%`;
-    }
-
-    function toggleBucketItem(idx) {
-      window.LOVE_CONFIG.bucketList[idx].completed = !window.LOVE_CONFIG.bucketList[idx].completed;
-      persistConfig();
-      renderBucketList();
-      if (window.LOVE_CONFIG.bucketList[idx].completed) {
-        playSparkleSound();
-        triggerHapticFeedback();
-        launchConfetti();
-      }
-    }
-
-    function addBucketItem() {
-      const input = document.getElementById('newBucketInput');
-      const val = input.value.trim();
-      if (!val) return;
-
-      window.LOVE_CONFIG.bucketList.push({ text: val, completed: false });
-      persistConfig();
-      renderBucketList();
-      input.value = "";
-      showToast("¡Nuevo sueño añadido! ✨");
-    }
 
     /* =========================================================
      * RESPUESTA DE ELLA
@@ -4507,7 +4450,6 @@
         applyConfigToDOM();
         renderCoupons();
         renderPolaroids();
-        renderBucketList();
         closeConfigModal();
         showToast("Configuración restablecida ✨");
       }
