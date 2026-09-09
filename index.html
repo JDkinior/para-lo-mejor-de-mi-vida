@@ -165,6 +165,14 @@
                   #1a0b12;
     }
 
+    /* Las barras del navegador móvil cambian la altura visible durante el scroll.
+       Estas dos capas deben seguir al viewport visual para no revelar el color base. */
+    #masterRomanticAtmosphere,
+    #ambientCanvas {
+      height: 100vh;
+      height: 100dvh;
+    }
+
     /* Partículas de brillo animadas en el fondo del sobre */
     @keyframes sparkleFloat {
       0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
@@ -4495,11 +4503,17 @@
       let mouseTrail = [];
 
       function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // visualViewport se actualiza al ocultarse/mostrarse las barras de Chrome móvil.
+        // Así el canvas conserva exactamente la misma altura que el fondo fijo.
+        const viewport = window.visualViewport;
+        canvas.width = Math.round(viewport ? viewport.width : window.innerWidth);
+        canvas.height = Math.round(viewport ? viewport.height : window.innerHeight);
       }
       resize();
       window.addEventListener('resize', resize);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', resize);
+      }
 
       for (let i = 0; i < 28; i++) {
         particles.push({
