@@ -710,18 +710,20 @@
         box-sizing: border-box;
       }
       #heroEmergingContent h1 {
-        font-size: 1.5rem !important;
-        line-height: 1.1 !important;
+        font-size: clamp(2rem, 7.5vw, 2.75rem) !important;
+        line-height: 1.15 !important;
       }
       #heroEmergingContent #heroGirlName {
-        font-size: 2.35rem !important;
+        font-size: clamp(3.25rem, 12vw, 4.5rem) !important;
         line-height: 1.1 !important;
+        display: inline-block;
+        padding: 0.1rem 0;
       }
       #heroEmergingContent #heroSubtitle {
-        font-size: 0.72rem !important;
-        line-height: 1.25 !important;
-        margin-top: 0.2rem !important;
-        max-width: 21rem !important;
+        font-size: 0.82rem !important;
+        line-height: 1.35 !important;
+        margin-top: 0.35rem !important;
+        max-width: 22rem !important;
       }
       #heroEmergingContent .tarjeta-contador {
         margin-top: 0.45rem !important;
@@ -1043,9 +1045,9 @@
       <div id="heroEmergingContent" class="absolute inset-0 z-30 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center px-4 pt-16 sm:pt-20 pb-4 opacity-0 pointer-events-none will-change-transform" style="transform: translateY(70px) scale(0.88);">
 
         <!-- Título principal con gradiente multicolor luxury -->
-        <h1 class="font-serif text-2xl sm:text-5xl md:text-6xl font-bold tracking-tight text-rose-100 leading-[1.1] drop-shadow-sm">
+        <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-rose-100 leading-[1.1] drop-shadow-sm">
           Felices 6 Meses, <br>
-          <span id="heroGirlName" class="font-handwriting text-3xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 drop-shadow-none">
+          <span id="heroGirlName" class="font-handwriting text-5xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 drop-shadow-none">
             Mi Princesa
           </span>
         </h1>
@@ -1888,7 +1890,7 @@
           id: 7,
           url: "Septiembre.jpeg",
           caption: "Septiembre",
-          date: "¡6 Meses Juntos! ❤️",
+          date: "¡6 Meses Juntos!",
           rotate: "-1deg"
         }
       ],
@@ -2087,7 +2089,7 @@
     // Incrementar este número cada vez que cambie contenido en DEFAULT_CONFIG
     // (carta, razones, cumplidos, citas, línea de tiempo, firma, etc.)
     // Eso forzará a que el navegador use los valores nuevos del código.
-    const CONFIG_VERSION = 15;
+    const CONFIG_VERSION = 16;
 
     window.LOVE_CONFIG = loadStoredConfig();
 
