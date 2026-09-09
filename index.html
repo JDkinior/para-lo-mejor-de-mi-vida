@@ -169,8 +169,15 @@
        Estas dos capas deben seguir al viewport visual para no revelar el color base. */
     #masterRomanticAtmosphere,
     #ambientCanvas {
+      top: 0;
+      right: 0;
+      bottom: auto;
+      left: 0;
       height: 100vh;
       height: 100dvh;
+      /* En Chrome móvil, dvh puede tardar un cuadro al expandirse la pantalla.
+         lvh asegura que el fondo nunca sea menor que la vista visible. */
+      height: 100lvh;
     }
 
     /* Partículas de brillo animadas en el fondo del sobre */
