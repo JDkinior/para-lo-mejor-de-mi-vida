@@ -94,6 +94,7 @@
     }
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 4.5rem;
       -webkit-tap-highlight-color: transparent;
       background-color: #1a0b12;
     }
@@ -102,6 +103,8 @@
       background-color: #1a0b12;
       color: #fdf2f4;
       overflow-x: hidden;
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
     }
 
     /* Glassmorphism de alta definición dark first */
@@ -2140,6 +2143,44 @@
     let currentTiltX = 0;
     let currentTiltY = 0;
     let currentTiltZ = 0;
+    let envelopeRenderFrame = null;
+
+    // Actualiza la portada solo mientras hay un cambio que animar. Antes se
+    // recalculaban transformaciones en cada frame aun al recorrer el resto de
+    // la página, lo que competía con el scroll en teléfonos.
+    function requestEnvelopeRender() {
+      if (envelopeRenderFrame !== null) return;
+
+      const render = () => {
+        currentScrollProgress += (targetScrollProgress - currentScrollProgress) * 0.16;
+        currentTiltX += (targetTiltX - currentTiltX) * 0.14;
+        currentTiltY += (targetTiltY - currentTiltY) * 0.14;
+        currentTiltZ += (targetTiltZ - currentTiltZ) * 0.14;
+
+        const isSettled =
+          Math.abs(targetScrollProgress - currentScrollProgress) < 0.001 &&
+          Math.abs(targetTiltX - currentTiltX) < 0.01 &&
+          Math.abs(targetTiltY - currentTiltY) < 0.01 &&
+          Math.abs(targetTiltZ - currentTiltZ) < 0.01;
+
+        if (isSettled) {
+          currentScrollProgress = targetScrollProgress;
+          currentTiltX = targetTiltX;
+          currentTiltY = targetTiltY;
+          currentTiltZ = targetTiltZ;
+        }
+
+        updateEnvelopeVisuals(currentScrollProgress);
+
+        if (isSettled) {
+          envelopeRenderFrame = null;
+        } else {
+          envelopeRenderFrame = requestAnimationFrame(render);
+        }
+      };
+
+      envelopeRenderFrame = requestAnimationFrame(render);
+    }
 
     function initEnvelopeScrollEngine() {
       window.addEventListener('scroll', handleEnvelopeScroll, { passive: true });
@@ -2155,12 +2196,14 @@
           targetTiltY = normX * 9;   // Giro horizontal 3D
           targetTiltX = -normY * 8;  // Inclinación vertical 3D
           targetTiltZ = normX * 3.5; // Rotación Z interactiva al mover el mouse
+          requestEnvelopeRender();
         });
 
         envelopeWrapper.addEventListener('mouseleave', () => {
           targetTiltX = 0;
           targetTiltY = 0;
           targetTiltZ = 0;
+          requestEnvelopeRender();
         });
       }
 
@@ -2175,31 +2218,13 @@
         targetTiltY = normX * 4;
         targetTiltX = -normY * 4;
         targetTiltZ = normX * 1.5;
+        requestEnvelopeRender();
       });
 
-      // Soporte para inclinación sutil en móvil
-      window.addEventListener('touchmove', (e) => {
-        if (currentScrollProgress > 0.25) return;
-        if (e.touches && e.touches.length > 0) {
-          const cx = window.innerWidth / 2;
-          const cy = window.innerHeight / 2;
-          targetTiltY = ((e.touches[0].clientX - cx) / cx) * 3;
-          targetTiltX = -((e.touches[0].clientY - cy) / cy) * 3;
-          targetTiltZ = 0;
-        }
-      }, { passive: true });
-
-      // Bucle de renderizado continuo a 60fps con física Lerp ultra fluida
-      function renderLoop() {
-        currentScrollProgress += (targetScrollProgress - currentScrollProgress) * 0.12;
-        currentTiltX += (targetTiltX - currentTiltX) * 0.1;
-        currentTiltY += (targetTiltY - currentTiltY) * 0.1;
-        currentTiltZ += (targetTiltZ - currentTiltZ) * 0.1;
-
-        updateEnvelopeVisuals(currentScrollProgress);
-        requestAnimationFrame(renderLoop);
-      }
-      requestAnimationFrame(renderLoop);
+      // En móvil priorizamos el gesto nativo: no usamos touchmove para inclinar
+      // el sobre, porque se ejecutaba durante cada desplazamiento vertical.
+      handleEnvelopeScroll();
+      requestEnvelopeRender();
     }
 
     function handleEnvelopeScroll() {
@@ -2212,6 +2237,7 @@
 
       let progress = -trackRect.top / trackHeight;
       targetScrollProgress = Math.max(0, Math.min(1, progress));
+      requestEnvelopeRender();
     }
 
     function updateEnvelopeVisuals(p) {
@@ -2357,11 +2383,15 @@
         startRomanticMusic(false);
       }
 
-      targetScrollProgress = 1;
+      // La apertura se detiene cuando la felicitación ya está totalmente
+      // visible. El destino anterior (95%) caía en el tramo de salida y hacía
+      // que la página pareciera transparente justo después de tocar la carta.
+      const revealProgress = 0.70;
+      targetScrollProgress = revealProgress;
 
       const track = document.getElementById('heroEnvelope');
       if (!track) return;
-      const targetScroll = track.offsetTop + (track.offsetHeight - window.innerHeight) * 0.95;
+      const targetScroll = track.offsetTop + (track.offsetHeight - window.innerHeight) * revealProgress;
 
       window.scrollTo({
         top: targetScroll,
