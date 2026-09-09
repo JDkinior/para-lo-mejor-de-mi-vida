@@ -88,10 +88,6 @@
   </script>
 
   <style>
-    /* Soporte para viewport dinámico en móviles (iOS Safari & Chrome) */
-    :root {
-      --dvh: 100dvh;
-    }
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 4.5rem;
@@ -165,24 +161,20 @@
                   #1a0b12;
     }
 
-    /* Las barras del navegador móvil cambian la altura visible durante el scroll.
-       Estas dos capas deben seguir al viewport visual para no revelar el color base. */
+    /* Fondo fijo: sigue el viewport visual en navegadores móviles.
+       100lvh es el valor más alto de la familia dvh/svh/lvh, garantizando que
+       el fondo nunca deje franjas del color de la pantalla al moverse las barras. */
     #masterRomanticAtmosphere,
     #ambientCanvas {
       top: 0;
       right: 0;
       bottom: auto;
       left: 0;
-      height: 100vh;
-      height: 100dvh;
-      /* En Chrome móvil, dvh puede tardar un cuadro al expandirse la pantalla.
-         lvh asegura que el fondo nunca sea menor que la vista visible. */
       height: 100lvh;
     }
 
-    /* `overflow: hidden` en un elemento fixed conserva en Chrome Android el
-       rectángulo de recorte previo mientras el dedo sigue desplazando. El
-       degradado interior ya tiene sus propios límites, así que evitamos ese clip. */
+    /* overflow:visible evita que Chrome Android congele el rectángulo de recorte
+       del fondo fijo mientras el dedo desplaza la página. */
     #masterRomanticAtmosphere {
       overflow: visible;
     }
@@ -943,14 +935,11 @@
       <!-- TEXTO GUÍA SUPERIOR (Visible cuando el sobre está cerrado) -->
       <div id="envelopeIntroPrompt" class="text-center mb-5 sm:mb-7 transition-all duration-300 max-w-xs sm:max-w-md z-10 pointer-events-none">
         <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-rose-900/60 text-rose-200 text-xs font-bold tracking-wide border border-rose-800 shadow-sm mb-2 backdrop-blur-sm">
-          <span>✨ Tienes una carta muy especial ✨</span>
+          <span>Tienes una carta muy especial</span>
         </span>
         <h2 class="font-serif text-2xl sm:text-3xl font-bold text-rose-100 leading-tight drop-shadow-sm">
           Medio Año de Amor
         </h2>
-        <p class="text-xs text-rose-300/90 mt-1.5 font-medium">
-          Toca el sobre o desliza hacia abajo para abrirla 👇
-        </p>
       </div>
 
       <!-- 1. EL SOBRE 3D EDITORIAL — Centrado naturalmente entre los textos -->
@@ -1000,12 +989,7 @@
 
               <!-- Detalles frontales del sobre: Texto bien contenido en la solapa inferior triangular -->
               <div id="envelopeFrontLabel" class="absolute inset-0 z-35 flex flex-col justify-between p-4 transition-opacity duration-300 pointer-events-none">
-                <div class="self-end mr-3 mt-0.5 flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/90 dark:bg-rose-950/85 border border-dashed border-rose-400 shadow-xs backdrop-blur-xs">
-                  <span class="text-[10px]">🌹</span>
-                  <span class="text-[9px] font-mono font-bold tracking-wider text-rose-700 dark:text-rose-200 uppercase">AMOR • 6M</span>
-                </div>
-
-                <div class="text-center pb-3.5 sm:pb-4 px-6 sm:px-8">
+                <div class="mt-auto text-center pb-3.5 sm:pb-4 px-6 sm:px-8">
                   <p class="font-cursive text-2xl sm:text-3xl text-rose-950 dark:text-rose-100 drop-shadow-xs leading-tight tracking-wide">
                     Para la mujer de mi vida
                   </p>
@@ -1057,12 +1041,6 @@
 
       <!-- 2. EL CONTENIDO REAL DE LA PÁGINA QUE EMERGE DE ADENTRO (HERO & CONTADOR EN VIVO) -->
       <div id="heroEmergingContent" class="absolute inset-0 z-30 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center px-4 pt-16 sm:pt-20 pb-4 opacity-0 pointer-events-none will-change-transform" style="transform: translateY(70px) scale(0.88);">
-        
-        <!-- Insignia romántica con glassmorphism -->
-        <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-rose-900/60 text-rose-300 text-[10px] sm:text-xs font-bold tracking-wide mb-1.5 sm:mb-3 border border-rose-800 shadow-md backdrop-blur-sm">
-          <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping inline-block"></span>
-          <span>✨ 6 Meses de Pura Magia ✨</span>
-        </div>
 
         <!-- Título principal con gradiente multicolor luxury -->
         <h1 class="font-serif text-2xl sm:text-5xl md:text-6xl font-bold tracking-tight text-rose-100 leading-[1.1] drop-shadow-sm">
@@ -1073,7 +1051,7 @@
         </h1>
 
         <p id="heroSubtitle" class="mt-1 sm:mt-3 text-xs sm:text-base text-rose-900/75 dark:text-rose-200/75 max-w-sm sm:max-w-lg mx-auto font-light leading-snug sm:leading-relaxed">
-          Medio año construyendo el rincón más bonito del mundo: nuestro amor. Cada día que pasa me convenzo más de que eres lo mejor que me ha pasado.
+          Medio año construyendo el rincón más bonito del mundo:   nuestro amor. Cada día que pasa me convenzo más de que eres lo mejor que me ha pasado.
         </p>
 
         <!-- TARJETA DEL CONTADOR EN TIEMPO REAL — Glass luxury card -->
@@ -1091,10 +1069,6 @@
                 <svg class="w-3.5 h-3.5 fill-current text-rose-500 animate-pulse-soft" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
                 <span>Tiempo juntos en este mundo</span>
               </div>
-              <span class="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-bold text-rose-600 bg-rose-900/50 px-2 sm:px-2.5 py-0.5 rounded-full">
-                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span>
-                En vivo
-              </span>
             </div>
 
             <!-- 4 Cajas del tiempo — Luxury style -->
@@ -1109,11 +1083,11 @@
               </div>
               <div class="caja-tiempo rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center" style="background: rgba(30,10,20,0.6); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);">
                 <span id="counterMinutes" class="numero-tiempo block font-serif text-xl sm:text-4xl font-extrabold text-rose-300 leading-none">00</span>
-                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Min</span>
+                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Minutos</span>
               </div>
               <div class="caja-tiempo rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center" style="background: linear-gradient(135deg, rgba(76,5,25,0.7), rgba(43,16,27,0.6)); border: 1px solid rgba(244,63,94,0.35); box-shadow: 0 4px 16px rgba(225,29,72,0.2), inset 0 1px 0 rgba(255,255,255,0.05);">
                 <span id="counterSeconds" class="numero-tiempo block font-serif text-xl sm:text-4xl font-extrabold text-rose-400 leading-none" style="animation: pulseSoft 1s ease-in-out infinite;">00</span>
-                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Seg</span>
+                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Segundos</span>
               </div>
             </div>
 
@@ -1125,20 +1099,20 @@
               </div>
               <div class="p-1">
                 <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Latidos por ti</span>
-                <span id="statBeats" class="stat-val font-bold text-rose-200 text-[10px] sm:text-sm">~18M 💓</span>
+                <span id="statBeats" class="stat-val font-bold text-rose-200 text-[10px] sm:text-sm">~18M</span>
               </div>
               <div class="p-1">
                 <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Sonrisas</span>
-                <span class="stat-val font-bold text-rose-200 text-[10px] sm:text-sm">Infinitas ✨</span>
+                <span class="stat-val font-bold text-rose-200 text-[10px] sm:text-sm">Infinitas </span>
               </div>
               <div class="p-1">
-                <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Certeza</span>
-                <span class="stat-val font-bold text-rose-400 text-[10px] sm:text-sm">100% ♾️</span>
+                <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Amor</span>
+                <span class="stat-val font-bold text-rose-400 text-[10px] sm:text-sm">Incalculable</span>
               </div>
             </div>
 
             <p class="mt-2 sm:mt-3 text-[10px] sm:text-[11px] text-rose-400/70 font-medium text-center">
-              Juntos oficialmente desde el <span id="displayStartDate" class="font-bold text-rose-300">8 de marzo de 2026</span> 🌹
+              Juntos oficialmente desde el <span id="displayStartDate" class="font-bold text-rose-300"> 9 de marzo de 2026</span> 🌹
             </p>
           </div>
         </div>
@@ -1147,15 +1121,15 @@
         <div class="botones-accion mt-3 sm:mt-5 flex flex-wrap justify-center gap-2 sm:gap-2.5">
           <a href="#recuerdos" class="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm text-white flex items-center gap-2 transition active:scale-95"
             style="background: linear-gradient(135deg, #e11d48, #f43f5e); box-shadow: 0 6px 20px rgba(225,29,72,0.35), 0 2px 8px rgba(0,0,0,0.1);">
-            <span>📸 Álbum de Fotos</span>
+            <span>Fotos polaroid</span>
           </a>
           <a href="#minijuegos" class="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-rose-950/60 text-rose-200 font-semibold text-xs sm:text-sm flex items-center gap-2 transition active:scale-95"
             style="border: 1px solid rgba(244,63,94,0.25); box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
-            <span>🎮 Minijuegos</span>
+            <span>Minijuegos</span>
           </a>
           <button onclick="launchSurpriseConfetti()" class="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm flex items-center gap-2 transition active:scale-95"
             style="background: linear-gradient(135deg, #fbbf24, #f97316); border: 1px solid rgba(255,255,255,0.5); color: #4a121a; box-shadow: 0 7px 18px rgba(245,158,11,0.35), inset 0 1px 0 rgba(255,255,255,0.45);">
-            <span>🎉 ¡Celebrar!</span>
+            <span>¡Celebrar!</span>
           </button>
         </div>
 
@@ -1719,7 +1693,7 @@
               <span class="font-cursive text-2xl sm:text-3xl text-rose-300">Con todo mi corazón,</span>
             </div>
             <span class="text-[10px] font-bold text-rose-200 bg-rose-100/70 dark:bg-rose-900/50 px-3 py-0.5 rounded-full border border-rose-700/40">
-              6 Meses Juntos ✨
+              6 Meses Juntos
             </span>
           </div>
 
@@ -1948,7 +1922,7 @@
         {
           mes: "Mes 4",
           titulo: "Tu Abrazo = Mi Hogar",
-          desc: "Entendí que el hogar es el espacio exacto entre tus brazos cuando me aprietas fuerte.",
+          desc: "Cada abrazo tuyo me recuerda que no importa dónde estemos, contigo siempre estoy en casa.",
           icon: "🫂"
         },
         {
@@ -2167,19 +2141,6 @@
     /* =========================================================
      * INICIALIZACIÓN
      * ========================================================= */
-    function toggleDarkMode() {
-      const html = document.documentElement;
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        html.classList.add('light');
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.classList.add('dark');
-        html.classList.remove('light');
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
       applyConfigToDOM();
       startLiveCounter();
@@ -3020,103 +2981,6 @@
         }
       }
     });
-
-    /* =========================================================
-     * RULETA DE CITAS
-     * ========================================================= */
-    let wheelCanvas, wheelCtx;
-    let isWheelSpinning = false;
-    let currentWheelAngle = 0;
-
-    function initWheel() {
-      wheelCanvas = document.getElementById('wheelCanvas');
-      if (!wheelCanvas) return;
-      wheelCtx = wheelCanvas.getContext('2d');
-      drawWheel(0);
-    }
-
-    function drawWheel(rotationAngle) {
-      if (!wheelCtx) return;
-      const opts = window.LOVE_CONFIG.wheelOptions;
-      const total = opts.length;
-      const arc = (2 * Math.PI) / total;
-      const radius = wheelCanvas.width / 2;
-      const colors = ['#f43f5e', '#fb7185', '#fda4af', '#f43f5e', '#fb7185', '#e11d48'];
-
-      wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
-      wheelCtx.save();
-      wheelCtx.translate(radius, radius);
-      wheelCtx.rotate(rotationAngle);
-
-      for (let i = 0; i < total; i++) {
-        const angle = i * arc;
-        wheelCtx.beginPath();
-        wheelCtx.fillStyle = colors[i % colors.length];
-        wheelCtx.moveTo(0, 0);
-        wheelCtx.arc(0, 0, radius - 4, angle, angle + arc);
-        wheelCtx.closePath();
-        wheelCtx.fill();
-        wheelCtx.lineWidth = 2;
-        wheelCtx.strokeStyle = "#ffffff";
-        wheelCtx.stroke();
-
-        wheelCtx.save();
-        wheelCtx.rotate(angle + arc / 2);
-        wheelCtx.fillStyle = "#ffffff";
-        wheelCtx.font = "bold 11px sans-serif";
-        wheelCtx.textAlign = "right";
-        wheelCtx.fillText(opts[i].title.substring(0, 16), radius - 15, 4);
-        wheelCtx.restore();
-      }
-      wheelCtx.restore();
-    }
-
-    function spinDateWheel() {
-      if (isWheelSpinning) return;
-      isWheelSpinning = true;
-      triggerHapticFeedback();
-
-      const opts = window.LOVE_CONFIG.wheelOptions;
-      const spinRotations = 5 + Math.random() * 4;
-      const randomStop = Math.random() * 2 * Math.PI;
-      const targetAngle = currentWheelAngle + spinRotations * 2 * Math.PI + randomStop;
-      
-      const startTime = performance.now();
-      const duration = 3800;
-
-      function animateWheel(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const currentAngle = currentWheelAngle + (targetAngle - currentWheelAngle) * easeOut;
-
-        drawWheel(currentAngle);
-
-        if (progress < 1) {
-          requestAnimationFrame(animateWheel);
-        } else {
-          currentWheelAngle = targetAngle % (2 * Math.PI);
-          isWheelSpinning = false;
-          
-          const arc = (2 * Math.PI) / opts.length;
-          let normalizedAngle = (1.5 * Math.PI - currentWheelAngle) % (2 * Math.PI);
-          if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
-          const winningIndex = Math.floor(normalizedAngle / arc) % opts.length;
-
-          const chosen = opts[winningIndex];
-          const resBox = document.getElementById('wheelResultBox');
-          document.getElementById('wheelResultTitle').textContent = chosen.title;
-          document.getElementById('wheelResultDesc').textContent = chosen.desc;
-          resBox.classList.remove('hidden');
-
-          playSparkleSound();
-          triggerHapticFeedback();
-          launchConfetti();
-          showToast(`¡Plan elegido: ${chosen.title}! 🎡❤️`);
-        }
-      }
-      requestAnimationFrame(animateWheel);
-    }
 
     /* =========================================================
      * BUCKET LIST
@@ -4737,12 +4601,8 @@
       }
       playSparkleSound();
       triggerHapticFeedback();
-      showToast("¡Felices 6 meses, mi amor! ❤️");
+      showToast("¡Felices 6 meses, mi amor! 🩶");
     }
   </script>
 </body>
 </html>
-
-
-
-
