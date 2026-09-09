@@ -2044,7 +2044,7 @@
     // Incrementar este número cada vez que cambie contenido en DEFAULT_CONFIG
     // (carta, razones, cumplidos, citas, línea de tiempo, firma, etc.)
     // Eso forzará a que el navegador use los valores nuevos del código.
-    const CONFIG_VERSION = 21;
+    const CONFIG_VERSION = 22;
 
     window.LOVE_CONFIG = loadStoredConfig();
 
@@ -2380,9 +2380,6 @@
 
     // Tocar el sobre directamente
     function handleEnvelopeTap() {
-      if (!isMusicPlaying) {
-        startRomanticMusic(false);
-      }
       openEnvelopeCinematic();
     }
 
@@ -2390,7 +2387,7 @@
     function openEnvelopeCinematic() {
       triggerHapticFeedback();
       playWaxSealSound();
-      if (!isMusicPlaying) {
+      if (!isMusicPlaying && !userManuallyMuted) {
         startRomanticMusic(false);
       }
 
@@ -4018,6 +4015,9 @@
      * BACKGROUND MUSIC ENGINE (AUDIO NATIVO + SINTETIZADOR WEB AUDIO API)
      * ========================================================= */
     let isMusicPlaying = false;
+    let isStartingMusic = false;
+    let userManuallyMuted = false;
+    let wasPlayingBeforeHidden = false;
     let audioCtx = null;
     let musicInterval = null;
 
@@ -4032,7 +4032,7 @@
 
       // Políticas de autoplay: garantizar inicio ante la primera interacción (toque, clic o scroll)
       const startOnGesture = () => {
-        if (!isMusicPlaying) {
+        if (!isMusicPlaying && !userManuallyMuted) {
           startRomanticMusic(false);
         }
         ['click', 'touchstart', 'pointerdown', 'scroll', 'keydown'].forEach(evt => {
@@ -4043,59 +4043,112 @@
       ['click', 'touchstart', 'pointerdown', 'scroll', 'keydown'].forEach(evt => {
         window.addEventListener(evt, startOnGesture, { passive: true, once: true });
       });
+
+      // Detener audio inmediatamente al salir de la página o cambiar de pestaña
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (isMusicPlaying) {
+            wasPlayingBeforeHidden = true;
+            pauseAudioInternal();
+          }
+        } else {
+          if (wasPlayingBeforeHidden && !userManuallyMuted) {
+            wasPlayingBeforeHidden = false;
+            startRomanticMusic(false);
+          }
+        }
+      });
+
+      window.addEventListener('pagehide', () => {
+        pauseAudioInternal();
+      });
+
+      window.addEventListener('blur', () => {
+        if (document.hidden && isMusicPlaying) {
+          wasPlayingBeforeHidden = true;
+          pauseAudioInternal();
+        }
+      });
     }
 
     function attemptPlayMusic() {
       try {
-        startRomanticMusic(false);
+        if (!userManuallyMuted) {
+          startRomanticMusic(false);
+        }
       } catch (e) {
         console.log("Autoplay en espera del primer gesto del usuario:", e);
       }
     }
 
     function startRomanticMusic(notify = true) {
-      if (isMusicPlaying) return;
+      if (isMusicPlaying || isStartingMusic) return;
+      isStartingMusic = true;
+
+      // Limpiar cualquier sonido o intervalo previo para evitar solapamientos
+      pauseAudioInternal();
+      isStartingMusic = true;
 
       const audioEl = document.getElementById('bgMusicAudio');
 
       // Si existe elemento de audio con archivo local o URL
       if (audioEl && audioEl.src && !audioEl.src.endsWith('/#') && audioEl.src !== window.location.href) {
         audioEl.play().then(() => {
+          if (!isStartingMusic) {
+            audioEl.pause();
+            return;
+          }
+          isStartingMusic = false;
           isMusicPlaying = true;
+          userManuallyMuted = false;
           updateMusicUI(true);
           if (notify) showToast("Reproduciendo música de fondo 🎵");
         }).catch(err => {
+          if (!isStartingMusic) return;
           console.log("Audio HTML5 bloqueado o archivo no encontrado, usando melodía de caja de música integrada:", err);
-          startSynthesizedMelody();
+          isStartingMusic = false;
           isMusicPlaying = true;
+          userManuallyMuted = false;
+          startSynthesizedMelody();
           updateMusicUI(true);
           if (notify) showToast("Reproduciendo melodía romántica 🎵");
         });
       } else {
         // Melodía romántica integrada sintetizada
-        startSynthesizedMelody();
+        isStartingMusic = false;
         isMusicPlaying = true;
+        userManuallyMuted = false;
+        startSynthesizedMelody();
         updateMusicUI(true);
         if (notify) showToast("Reproduciendo melodía romántica 🎵");
       }
     }
 
-    function stopRomanticMusic(notify = true) {
+    // Pausa interna sin marcar userManuallyMuted (para cambio de pestaña o preparación limpia)
+    function pauseAudioInternal() {
+      isStartingMusic = false;
+      isMusicPlaying = false;
       const audioEl = document.getElementById('bgMusicAudio');
       if (audioEl) {
         audioEl.pause();
       }
       stopSynthesizedMelody();
-      isMusicPlaying = false;
       updateMusicUI(false);
+    }
+
+    function stopRomanticMusic(notify = true) {
+      userManuallyMuted = true;
+      wasPlayingBeforeHidden = false;
+      pauseAudioInternal();
       if (notify) showToast("Música pausada ⏸");
     }
 
     function toggleRomanticMusic() {
-      if (!isMusicPlaying) {
-        startRomanticMusic(true);
-      } else {
+      if (isMusicPlaying || isStartingMusic) {
         stopRomanticMusic(true);
+      } else {
+        userManuallyMuted = false;
+        startRomanticMusic(true);
       }
     }
 
@@ -4119,6 +4172,9 @@
     }
 
     function startSynthesizedMelody() {
+      // SIEMPRE detener cualquier loop o chime previo antes de arrancar uno nuevo
+      stopSynthesizedMelody();
+
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!audioCtx) audioCtx = new AudioContext();
       if (audioCtx.state === 'suspended') {
@@ -4142,7 +4198,7 @@
       let step = 0;
 
       function playMusicBoxChime(freq) {
-        if (!audioCtx || audioCtx.state === 'closed') return;
+        if (!audioCtx || audioCtx.state === 'closed' || !isMusicPlaying) return;
         const now = audioCtx.currentTime;
 
         // Oscilador fundamental suave
@@ -4179,6 +4235,10 @@
       step = 1;
 
       musicInterval = setInterval(() => {
+        if (!isMusicPlaying) {
+          stopSynthesizedMelody();
+          return;
+        }
         playMusicBoxChime(melodyNotes[step % melodyNotes.length]);
         step++;
       }, 480);
@@ -4188,6 +4248,11 @@
       if (musicInterval) {
         clearInterval(musicInterval);
         musicInterval = null;
+      }
+      if (audioCtx && audioCtx.state === 'running') {
+        try {
+          audioCtx.suspend();
+        } catch (_) {}
       }
     }
 
