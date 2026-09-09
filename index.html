@@ -2094,6 +2094,11 @@
       bgMusicUrl: "musica.mp3"
     };
 
+    // Incrementar este número cada vez que cambie contenido en DEFAULT_CONFIG
+    // (carta, razones, cumplidos, citas, línea de tiempo, firma, etc.)
+    // Eso forzará a que el navegador use los valores nuevos del código.
+    const CONFIG_VERSION = 3;
+
     window.LOVE_CONFIG = loadStoredConfig();
 
     function loadStoredConfig() {
@@ -2101,6 +2106,29 @@
         const stored = localStorage.getItem('LOVE_ANNIVERSARY_CONFIG');
         if (stored) {
           const parsed = JSON.parse(stored);
+
+          // Si la versión del localStorage no coincide, aplicamos solo las
+          // preferencias del usuario y recargamos todo el contenido del código.
+          const storedVersion = parsed._version || 0;
+          if (storedVersion !== CONFIG_VERSION) {
+            const userPrefs = {
+              girlName:        parsed.girlName        || DEFAULT_CONFIG.girlName,
+              boyName:         parsed.boyName         || DEFAULT_CONFIG.boyName,
+              whatsappNumber:  parsed.whatsappNumber  || DEFAULT_CONFIG.whatsappNumber,
+              startDate:       parsed.startDate       || DEFAULT_CONFIG.startDate,
+              bgMusicUrl:      parsed.bgMusicUrl      || DEFAULT_CONFIG.bgMusicUrl,
+              bucketList:      parsed.bucketList      || DEFAULT_CONFIG.bucketList,
+            };
+            // Corregir fecha incorrecta heredada
+            if (userPrefs.startDate === "2026-03-08T00:00:00") {
+              userPrefs.startDate = "2026-03-09T00:00:00";
+            }
+            const merged = { ...DEFAULT_CONFIG, ...userPrefs, _version: CONFIG_VERSION };
+            localStorage.setItem('LOVE_ANNIVERSARY_CONFIG', JSON.stringify(merged));
+            return merged;
+          }
+
+          // Versión igual: se respetan todos los campos guardados del usuario
           if (parsed.coupons && Array.isArray(parsed.coupons)) {
             parsed.coupons = parsed.coupons.map((c) => {
               if (c && c.icon) {
@@ -2122,12 +2150,12 @@
           if (parsed.startDate === "2026-03-08T00:00:00") {
             parsed.startDate = "2026-03-09T00:00:00";
           }
-          return { ...DEFAULT_CONFIG, ...parsed };
+          return { ...DEFAULT_CONFIG, ...parsed, _version: CONFIG_VERSION };
         }
       } catch (e) {
         console.warn("Error leyendo localStorage:", e);
       }
-      return { ...DEFAULT_CONFIG };
+      return { ...DEFAULT_CONFIG, _version: CONFIG_VERSION };
     }
 
     function persistConfig() {
