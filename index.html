@@ -645,7 +645,8 @@
     /* Portada móvil: el contenido oculto no debe reservar una pantalla vacía. */
     @media (max-width: 640px) {
       #heroEnvelope {
-        min-height: 132svh !important;
+        /* Da espacio real a la secuencia de apertura antes de llegar al álbum. */
+        min-height: 220svh !important;
       }
       #envelopeStickyStage {
         min-height: 100svh;
@@ -2312,9 +2313,14 @@
           // En móvil la capa ocupa todo el viewport: no debe interceptar el
           // gesto de scroll. Sus botones conservan pointer-events: auto por CSS.
           heroContent.style.pointerEvents = window.matchMedia('(max-width: 640px)').matches ? 'none' : (easeHero > 0.7 ? 'auto' : 'none');
-          // Debe mantenerse visible durante toda la apertura. Solo al llegar
-          // realmente al final queda detrás del contenido que sigue (álbum).
-          heroContent.style.zIndex = p >= 0.98 ? '0' : '30';
+          // Permanece durante la apertura y se retira solo al final del tramo
+          // de la portada, antes de que el álbum entre en pantalla.
+          if (p > 0.86) {
+            const exit = Math.min(1, (p - 0.86) / 0.14);
+            heroContent.style.opacity = Math.max(0, easeHero * (1 - exit));
+            heroContent.style.transform = `translateY(${-20 - exit * 45}px) scale(${1 - exit * 0.03})`;
+            heroContent.style.pointerEvents = 'none';
+          }
         } else {
           heroContent.style.opacity = '0';
           heroContent.style.transform = 'translateY(65px) scale(0.90)';
