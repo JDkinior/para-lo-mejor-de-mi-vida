@@ -1191,7 +1191,7 @@
     <section id="linea-tiempo" class="max-w-3xl mx-auto px-4 py-14">
       <div class="text-center max-w-md mx-auto mb-10">
         <span class="text-rose-400 font-bold text-xs tracking-widest uppercase">El Camino Recorrido</span>
-        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-rose-100 mt-1">Nuestra Historia en 6 Hitos</h2>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-rose-100 mt-1">Nuestra Historia en 6 momentos</h2>
         <p class="text-rose-300/70 text-xs sm:text-sm mt-1">
           Momentos que se quedaron grabados para siempre.
         </p>
@@ -1571,41 +1571,7 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 9. CÁPSULA DE DESEOS / BUCKET LIST JUNTOS  -->
-    <!-- ========================================== -->
-    <section class="max-w-3xl mx-auto px-4 py-14">
-      <div class="text-center max-w-md mx-auto mb-8">
-        <span class="text-rose-400 font-bold text-xs tracking-widest uppercase">Mirando al Futuro</span>
-        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-rose-100 mt-1">Nuestra Lista de Deseos</h2>
-        <p class="text-rose-300/70 text-xs sm:text-sm mt-1">
-          Metas y sueños para los próximos meses.
-        </p>
-      </div>
 
-      <div class="glass-panel rounded-3xl p-5 sm:p-8 shadow-xl border border-rose-200 dark:border-rose-900">
-        <div class="mb-4">
-          <div class="flex justify-between text-xs font-semibold text-rose-200 mb-1.5">
-            <span>Metas Conquistadas</span>
-            <span id="bucketProgressText">0 de 6</span>
-          </div>
-          <div class="w-full h-2.5 bg-rose-100 dark:bg-rose-900/60 rounded-full overflow-hidden">
-            <div id="bucketProgressBar" class="h-full bg-gradient-to-r from-rose-500 to-amber-500 transition-all duration-500 w-0"></div>
-          </div>
-        </div>
-
-        <div id="bucketListContainer" class="space-y-2.5">
-          <!-- Generado por JS -->
-        </div>
-
-        <div class="mt-5 pt-4 border-t border-rose-100 dark:border-rose-900 flex gap-2">
-          <input type="text" id="newBucketInput" placeholder="Añadir nuevo sueño..." class="flex-1 p-2.5 rounded-xl bg-white/80 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-xs focus:outline-none focus:border-rose-500">
-          <button onclick="addBucketItem()" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition">
-            Añadir ✨
-          </button>
-        </div>
-      </div>
-    </section>
 
     <!-- ========================================== -->
     <!-- 10. VALES DE AMOR CANJEABLES VIP           -->
@@ -1716,7 +1682,7 @@
         6 meses siendo mi lugar favorito en el mundo
       </p>
       <p class="text-xs text-rose-300/70 font-medium">
-        Hecho con todo el corazón exclusivamente para ti • <span id="footerNames">Tú & Yo</span>
+        Hecho con todo mi amor y solo para ti • <span id="footerNames">de Tu Amorcito Para mi amorcito</span>
       </p>
     </footer>
   </main>
@@ -1826,8 +1792,8 @@
   <!-- ======================================================== -->
   <script>
     const DEFAULT_CONFIG = {
-      girlName: "Mi Princesa",
-      boyName: "Tu Amor",
+      girlName: "Mi Amorcito",
+      boyName: "Tu Amorcito",
       whatsappNumber: "573115537459",
       startDate: "2026-03-09T00:00:00",
       anniversaryMonths: 6,
@@ -1935,57 +1901,55 @@
       timeline: [
         {
           date: "Día 1",
-          title: "El Primer Destello",
-          desc: "El instante en el que nuestras miradas se cruzaron y comenzó la mejor etapa de mi vida.",
-          tag: "El Origen"
-        },
-        {
-          date: "Mes 1",
-          title: "Nuestra Primera Cita",
-          desc: "Los nervios bonitos del inicio y la certeza de que había encontrado a alguien extraordinaria.",
+          title: "Una chica llorando",
+          desc: "Iba por unas popetas y me estrelle con una chica en pijama llorando, me miro, sonrio y continuó, no pude dejar de pensar en ella hasta que le escribí.",
           tag: "Conexión"
         },
         {
+          date: "Mes 1",
+          title: "La declaración",
+          desc: "Quería que todo fuera perfecto y salió mal, pero con unas flores, niños jugando y una tormenta que parecía jamas terminaría me dijo que sí, quiero ser tu novia.",
+          tag: "Propuesta"
+        },
+        {
           date: "Mes 2",
-          title: "El 'Sí' Oficial",
-          desc: "El día en que decidimos entrelazar nuestros caminos y comenzar a llamarnos novios.",
-          tag: "Oficiales"
+          title: "Las salidas",
+          desc: "Empezamos a salir y a conocernos más, todo parecía magico a su lado, cada día era una aventura, todo era nuevo, todo el tiempo aprendía junto a ella.",
+          tag: "Perfecto"
+        },
+        {
+          date: "Mes 3",
+          title: "El cumpleaños",
+          desc: "Llegó mi cumpleaños y me sorprendió con el mejor regalo, que estuviera en mi vida, era más de lo que antes recibí, una persona que me amaba con todo su corazón.",
+          tag: "Regalo"
         },
         {
           date: "Mes 4",
-          title: "Superando Días Difíciles",
-          desc: "Confirmar que no solo estamos en los días soleados, sino también para ser refugio mutuo.",
-          tag: "Equipo"
+          title: "Viajes",
+          desc: "Cada vez viajabamos más lejos, pero cada viaje era diferente, se disfrutaba de manera unica, no importaba a donde fueramos, siempre me sentía en casa.",
+          tag: "Hogar"
         },
         {
           date: "Mes 5",
-          title: "Recuerdos Imborrables",
-          desc: "Paseos y momentos mágicos que atesoro como pequeños tesoros en la memoria.",
-          tag: "Complicidad"
+          title: "Dos mundos",
+          desc: "No todo es perfecto, eramos dos personas diferentes, con mundos distintos, pero eso nos hizo más fuertes, aprendimos a respetarnos y a amarnos tal cual somos.",
+          tag: "Aprendizaje"
         },
         {
           date: "Hoy: Mes 6",
           title: "¡Medio Año de Novios!",
-          desc: "Hoy celebramos 6 meses de amor sincero. Y lo más lindo de todo: apenas estamos comenzando.",
-          tag: "Celebración"
+          desc: "Hoy celebramos 6 meses de amor sincero, el mas bonito que he vivido. Y lo más lindo de todo: apenas estamos comenzando.",
+          tag: "Amor Eterno"
         }
       ],
 
-      bucketList: [
-        { text: "Hacer un picnic al atardecer en el parque", completed: true },
-        { text: "Ver una noche entera de estrellas juntos", completed: false },
-        { text: "Viajar a la playa y caminar en la arena tomados de la mano", completed: false },
-        { text: "Cocinar una cena italiana desde cero juntos", completed: true },
-        { text: "Maratón de películas con manta y palomitas", completed: true },
-        { text: "Celebrar nuestro primer año de novios", completed: false }
-      ],
 
       compliments: [
-        "Amo la forma en la que tus ojitos brillan cuando me cuentas algo que te apasiona.",
+        "Amo la forma en la que tus ojitos brillan cuando te sientes feliz.",
         "Tienes el corazón más dulce, noble y comprensivo que jamás he conocido.",
-        "Tu voz es mi sonido favorito en todo el planeta.",
+        "Tu energía al contarme tus historias me recarga, me hace sentir vivo.",
         "Me haces sentir el hombre más afortunado del universo cada segundo.",
-        "Tu risa es contagiosa y tiene el poder de alegrar cualquier día nublado.",
+        "Tu risa es contagiosa y tiene el poder de alegrar cualquier día.",
         "Amo lo inteligente y dedicada que eres con todo lo que haces.",
         "Gracias por ser mi paz, mi refugio y mi persona favorita.",
         "Me encanta la manera tan tierna en la que me abrazas de repente.",
@@ -1993,15 +1957,6 @@
         "Cada detalle tuyo es perfecto para mí.",
         "Prometo estar para ti en cada paso, tomándote de la mano siempre.",
         "Hoy estás más hermosa que ayer, pero menos que mañana."
-      ],
-
-      wheelOptions: [
-        { title: "Noche de Sushi & Peli 🍣", desc: "Comida rica y la peli que tú elijas." },
-        { title: "Cena a la Luz de Velas 🕯️", desc: "Yo cocino tu platillo favorito." },
-        { title: "Paseo & Helado Doble 🍦", desc: "Caminata nocturna con tu helado favorito." },
-        { title: "Maratón de Series & Mimos 🍿", desc: "Cama, cobijita, snacks y muchos abrazos." },
-        { title: "Día de Deseo Libre 👑", desc: "Cualquier plan o antojo que quieras es una orden." },
-        { title: "Picnic al Atardecer 🧺", desc: "Manta, fresas con chocolate y buena música." }
       ],
 
       quiz: [
@@ -2053,23 +2008,23 @@
 
       coupons: [
         {
-          title: "Vale por una Cena a tu Gusto",
-          desc: "Yo cocino o elijo tu restaurante favorito. ¡Tú solo te dejas consentir!",
+          title: "Vale por una Comida a tu Gusto",
+          desc: "Elige a donde vamos a comer, y en esa semana te lo cumpliré ¡Tú solo te dejas consentir!",
           icon: "🍝"
         },
         {
-          title: "Vale por un Masaje Antiestrés",
-          desc: "25 minutos de masaje en espalda u hombros cuando tengas un día pesado.",
-          icon: "💆"
+          title: "Vale por una Salida en moto a donde quieras",
+          desc: "Vamos a viajar juntos al lugar que más te guste siempre que sea posible.",
+          icon: "🏍️"
         },
         {
-          title: "Vale por un Abrazo Eterno",
-          desc: "Sin límite de tiempo, aplicable en cualquier momento feliz o triste.",
+          title: "Vale por terminar una pelea",
+          desc: "Sin importar que tanto estemos peleando puedes usarlo para reconciliarnos.",
           icon: "🫂"
         },
         {
-          title: "Vale por Noche de Pelis & Snacks",
-          desc: "Tú escoges la peli y yo llevo todos tus dulces y antojos favoritos.",
+          title: "Vale por Noche de Pelis",
+          desc: "Tú escoges la peli y yo llevo preparo las palomitas, pueden ser dulces, saladas o ambas.",
           icon: "🍿"
         },
         {
@@ -2090,7 +2045,7 @@
     // Incrementar este número cada vez que cambie contenido en DEFAULT_CONFIG
     // (carta, razones, cumplidos, citas, línea de tiempo, firma, etc.)
     // Eso forzará a que el navegador use los valores nuevos del código.
-    const CONFIG_VERSION = 8;
+    const CONFIG_VERSION = 14;
 
     window.LOVE_CONFIG = loadStoredConfig();
 
@@ -2110,7 +2065,6 @@
               whatsappNumber:  parsed.whatsappNumber  || DEFAULT_CONFIG.whatsappNumber,
               startDate:       parsed.startDate       || DEFAULT_CONFIG.startDate,
               bgMusicUrl:      parsed.bgMusicUrl      || DEFAULT_CONFIG.bgMusicUrl,
-              bucketList:      parsed.bucketList      || DEFAULT_CONFIG.bucketList,
             };
             // Corregir fecha incorrecta heredada
             if (userPrefs.startDate === "2026-03-08T00:00:00") {
@@ -2169,7 +2123,6 @@
       renderReasons();
       renderTimeline();
       renderCoupons();
-      renderBucketList();
       initBackgroundMusic();
       initMemoryGame();
       initQuizGame();
@@ -2187,7 +2140,7 @@
       document.getElementById('heroGirlName').textContent = cfg.girlName;
       const introEl = document.getElementById('introGirlName');
       if (introEl) introEl.textContent = cfg.girlName;
-      document.getElementById('footerNames').textContent = `${cfg.boyName} & ${cfg.girlName}`;
+      document.getElementById('footerNames').textContent = 'de Tu Amorcito Para mi amorcito';
       document.getElementById('heroSubtitle').textContent = cfg.subtitle;
       document.getElementById('letterSignature').textContent = `Por siempre tuyo, ${cfg.boyName} ❤️`;
 
@@ -3003,51 +2956,6 @@
       }
     });
 
-    /* =========================================================
-     * BUCKET LIST
-     * ========================================================= */
-    function renderBucketList() {
-      const container = document.getElementById('bucketListContainer');
-      const list = window.LOVE_CONFIG.bucketList;
-
-      container.innerHTML = list.map((item, idx) => `
-        <div class="flex items-center justify-between p-3 rounded-2xl ${item.completed ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800' : 'bg-white/70 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900'} transition">
-          <label class="flex items-center gap-2.5 cursor-pointer flex-1">
-            <input type="checkbox" onchange="toggleBucketItem(${idx})" ${item.completed ? 'checked' : ''} class="w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-rose-300">
-            <span class="text-xs font-medium ${item.completed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-rose-100'}">${item.text}</span>
-          </label>
-          ${item.completed ? '<span class="text-[10px] text-emerald-600 font-bold ml-1">¡Logrado! ✨</span>' : ''}
-        </div>
-      `).join('');
-
-      const completedCount = list.filter(i => i.completed).length;
-      const percent = list.length ? (completedCount / list.length) * 100 : 0;
-      document.getElementById('bucketProgressText').textContent = `${completedCount} de ${list.length}`;
-      document.getElementById('bucketProgressBar').style.width = `${percent}%`;
-    }
-
-    function toggleBucketItem(idx) {
-      window.LOVE_CONFIG.bucketList[idx].completed = !window.LOVE_CONFIG.bucketList[idx].completed;
-      persistConfig();
-      renderBucketList();
-      if (window.LOVE_CONFIG.bucketList[idx].completed) {
-        playSparkleSound();
-        triggerHapticFeedback();
-        launchConfetti();
-      }
-    }
-
-    function addBucketItem() {
-      const input = document.getElementById('newBucketInput');
-      const val = input.value.trim();
-      if (!val) return;
-
-      window.LOVE_CONFIG.bucketList.push({ text: val, completed: false });
-      persistConfig();
-      renderBucketList();
-      input.value = "";
-      showToast("¡Nuevo sueño añadido! ✨");
-    }
 
     /* =========================================================
      * RESPUESTA DE ELLA
@@ -4544,7 +4452,6 @@
         applyConfigToDOM();
         renderCoupons();
         renderPolaroids();
-        renderBucketList();
         closeConfigModal();
         showToast("Configuración restablecida ✨");
       }
