@@ -645,48 +645,117 @@
       border: 1px solid rgba(251, 191, 36, 0.38);
     }
 
-    /* Portada móvil fluida y natural */
+    /* Portada móvil fluida, perfectamente centrada y adaptada a la pantalla */
     @media (max-width: 640px) {
       #heroEnvelope {
-        min-height: 140svh !important;
+        min-height: 135svh !important;
       }
       #envelopeStickyStage {
         min-height: 100svh;
-        height: auto;
+        height: 100svh;
         justify-content: center;
-        padding-top: max(3.5rem, env(safe-area-inset-top));
-        padding-bottom: 2rem;
+        align-items: center;
+        padding-top: max(0.75rem, env(safe-area-inset-top));
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        padding-left: 1rem;
+        padding-right: 1rem;
+        box-sizing: border-box;
       }
       #envelopeIntroPrompt {
         margin-bottom: 0.75rem;
       }
       #envelopeIntroPrompt h2 {
-        font-size: 1.7rem;
+        font-size: 1.55rem;
+        line-height: 1.15;
       }
       #envelopeIntroPrompt p {
         font-size: 0.75rem;
-        line-height: 1.25rem;
+        line-height: 1.2;
+        margin-top: 0.25rem;
       }
-      #envelopeStickyStage > .relative.w-full.max-w-4xl {
-        min-height: 0;
-        height: auto;
-        width: 100%;
+      #envelopeActionPrompt {
+        margin-top: 0.75rem;
+      }
+      #envelopeActionPrompt button {
+        padding: 0.65rem 1.4rem;
+        font-size: 0.8rem;
       }
       #heroEmergingContent {
-        position: relative;
+        position: absolute;
+        inset: 0;
         width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
+        align-items: center;
         justify-content: center;
-        padding-top: 0.5rem;
-        padding-bottom: 1rem;
+        padding-top: max(4.5rem, calc(env(safe-area-inset-top) + 3.85rem)) !important;
+        padding-bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        box-sizing: border-box;
+      }
+      #heroEmergingContent h1 {
+        font-size: 1.5rem !important;
+        line-height: 1.1 !important;
+      }
+      #heroEmergingContent #heroGirlName {
+        font-size: 2.35rem !important;
+        line-height: 1.1 !important;
+      }
+      #heroEmergingContent #heroSubtitle {
+        font-size: 0.72rem !important;
+        line-height: 1.25 !important;
+        margin-top: 0.2rem !important;
+        max-width: 21rem !important;
+      }
+      #heroEmergingContent .tarjeta-contador {
+        margin-top: 0.45rem !important;
+        padding: 0.65rem 0.75rem !important;
+        border-radius: 1.25rem !important;
+      }
+      #heroEmergingContent .caja-tiempo {
+        padding: 0.35rem 0.2rem !important;
+        border-radius: 0.75rem !important;
+      }
+      #heroEmergingContent .numero-tiempo {
+        font-size: 1.35rem !important;
+        line-height: 1 !important;
+      }
+      #heroEmergingContent .etiqueta-tiempo {
+        font-size: 0.55rem !important;
+        margin-top: 0.15rem !important;
+      }
+      #heroEmergingContent .fila-estadisticas {
+        margin-top: 0.35rem !important;
+        padding-top: 0.35rem !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 0.25rem !important;
+      }
+      #heroEmergingContent .fila-estadisticas .stat-label {
+        font-size: 0.52rem !important;
+        line-height: 1 !important;
+      }
+      #heroEmergingContent .fila-estadisticas .stat-val {
+        font-size: 0.7rem !important;
+        line-height: 1.1 !important;
+      }
+      #heroEmergingContent .botones-accion {
+        margin-top: 0.45rem !important;
+        gap: 0.4rem !important;
+      }
+      #heroEmergingContent .botones-accion a,
+      #heroEmergingContent .botones-accion button {
+        padding: 0.4rem 0.85rem !important;
+        font-size: 0.7rem !important;
       }
       #heroEmergingContent button,
       #heroEmergingContent a {
         pointer-events: auto;
       }
       #envelopeContainerWrapper {
-        width: min(92vw, 420px);
+        width: min(88vw, 380px);
       }
       #floatingMusicBtn {
         /* En móvil la barra superior ya contiene Melodía; evitamos duplicar
@@ -862,210 +931,99 @@
         </p>
       </div>
 
-      <!-- ESCENARIO PRINCIPAL: SOBRE + CONTENIDO QUE EMERGE DE ÉL -->
-      <div class="relative w-full max-w-4xl flex items-center justify-center min-h-[340px] sm:min-h-[440px]">
-        
-        <!-- 1. EL SOBRE 3D EDITORIAL — Viewport de perspectiva de cámara para parallax realista -->
-        <div class="envelope-camera-viewport absolute z-20 w-full flex items-center justify-center">
-          <div id="envelopeContainerWrapper" class="w-[88vw] max-w-[420px] aspect-[1.5/1] flex items-center justify-center cursor-pointer will-change-transform" onclick="handleEnvelopeTap()">
-            
-            <div class="relative w-full h-full envelope-3d-object">
-              <!-- Capa 1: Fondo y forro interior -->
-              <div id="envelopeBackWall" class="absolute inset-0 rounded-2xl overflow-hidden border border-rose-200/70 dark:border-rose-800/60 bg-gradient-to-br from-[#fff0f3] via-rose-100 to-rose-200 dark:from-rose-950 dark:via-[#200a14] dark:to-rose-900 z-10"
-                style="box-shadow: 0 30px 70px -10px rgba(159,18,57,0.20), 0 12px 30px -8px rgba(0,0,0,0.10);">
-                <!-- Forro interior con patrón romántico sutil -->
-                <div class="absolute inset-[6px] rounded-xl border border-rose-300/30 dark:border-rose-700/40 bg-gradient-to-br from-white/80 via-[#fff8f8]/70 to-rose-50/80 dark:from-[#1a0810]/80 dark:via-[#1a0810]/70 dark:to-[#220d16]/80 flex items-center justify-center overflow-hidden">
-                  <span class="text-rose-200/30 dark:text-rose-800/25 font-serif select-none" style="font-size: 5rem;">❦</span>
+      <!-- 1. EL SOBRE 3D EDITORIAL — Centrado naturalmente entre los textos -->
+      <div class="envelope-camera-viewport relative z-20 w-full flex items-center justify-center my-1 sm:my-3">
+        <div id="envelopeContainerWrapper" class="w-[88vw] max-w-[420px] aspect-[1.5/1] flex items-center justify-center cursor-pointer will-change-transform" onclick="handleEnvelopeTap()">
+          
+          <div class="relative w-full h-full envelope-3d-object">
+            <!-- Capa 1: Fondo y forro interior -->
+            <div id="envelopeBackWall" class="absolute inset-0 rounded-2xl overflow-hidden border border-rose-200/70 dark:border-rose-800/60 bg-gradient-to-br from-[#fff0f3] via-rose-100 to-rose-200 dark:from-rose-950 dark:via-[#200a14] dark:to-rose-900 z-10"
+              style="box-shadow: 0 30px 70px -10px rgba(159,18,57,0.20), 0 12px 30px -8px rgba(0,0,0,0.10);">
+              <!-- Forro interior con patrón romántico sutil -->
+              <div class="absolute inset-[6px] rounded-xl border border-rose-300/30 dark:border-rose-700/40 bg-gradient-to-br from-white/80 via-[#fff8f8]/70 to-rose-50/80 dark:from-[#1a0810]/80 dark:via-[#1a0810]/70 dark:to-[#220d16]/80 flex items-center justify-center overflow-hidden">
+                <span class="text-rose-200/30 dark:text-rose-800/25 font-serif select-none" style="font-size: 5rem;">❦</span>
+              </div>
+            </div>
+
+            <!-- Capa 2: Bolsillo frontal del sobre con pliegues origami (100% opaco para no traslucir) -->
+            <div id="envelopePocket" class="envelope-front-pocket absolute inset-0 z-30 pointer-events-none rounded-2xl overflow-hidden filter drop-shadow-lg">
+              <svg class="w-full h-full" viewBox="0 0 430 280" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="pocketSideGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fbcfe8" />
+                    <stop offset="100%" stop-color="#f43f5e" />
+                  </linearGradient>
+                  <linearGradient id="pocketSideGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#831843" />
+                    <stop offset="100%" stop-color="#4c0519" />
+                  </linearGradient>
+                  <linearGradient id="pocketBottomGradLight" x1="0%" y1="100%" x2="50%" y2="0%">
+                    <stop offset="0%" stop-color="#f43f5e" />
+                    <stop offset="60%" stop-color="#fb7185" />
+                    <stop offset="100%" stop-color="#fecdd3" />
+                  </linearGradient>
+                  <linearGradient id="pocketBottomGradDark" x1="0%" y1="100%" x2="50%" y2="0%">
+                    <stop offset="0%" stop-color="#4c0519" />
+                    <stop offset="60%" stop-color="#881337" />
+                    <stop offset="100%" stop-color="#9f1239" />
+                  </linearGradient>
+                  <filter id="pocketShadow" x="-5%" y="-10%" width="110%" height="120%">
+                    <feDropShadow dx="0" dy="-4" stdDeviation="4" flood-color="rgba(0,0,0,0.15)" />
+                  </filter>
+                </defs>
+                <path d="M 0,0 L 225,145 L 0,280 Z" fill="url(#pocketSideGradLight)" class="dark:fill-[url(#pocketSideGradDark)]" />
+                <path d="M 430,0 L 205,145 L 430,280 Z" fill="url(#pocketSideGradLight)" class="dark:fill-[url(#pocketSideGradDark)]" />
+                <path d="M 0,280 L 215,115 L 430,280 Z" filter="url(#pocketShadow)" fill="url(#pocketBottomGradLight)" class="dark:fill-[url(#pocketBottomGradDark)]" />
+              </svg>
+
+              <!-- Detalles frontales del sobre: Texto bien contenido en la solapa inferior triangular -->
+              <div id="envelopeFrontLabel" class="absolute inset-0 z-35 flex flex-col justify-between p-4 transition-opacity duration-300 pointer-events-none">
+                <div class="self-end mr-3 mt-0.5 flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/90 dark:bg-rose-950/85 border border-dashed border-rose-400 shadow-xs backdrop-blur-xs">
+                  <span class="text-[10px]">🌹</span>
+                  <span class="text-[9px] font-mono font-bold tracking-wider text-rose-700 dark:text-rose-200 uppercase">AMOR • 6M</span>
+                </div>
+
+                <div class="text-center pb-3.5 sm:pb-4 px-6 sm:px-8">
+                  <p class="font-cursive text-2xl sm:text-3xl text-rose-950 dark:text-rose-100 drop-shadow-xs leading-tight tracking-wide">
+                    Para la mujer de mi vida
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <!-- Capa 2: Bolsillo frontal del sobre con pliegues origami (100% opaco para no traslucir) -->
-              <div id="envelopePocket" class="envelope-front-pocket absolute inset-0 z-30 pointer-events-none rounded-2xl overflow-hidden filter drop-shadow-lg">
-                <svg class="w-full h-full" viewBox="0 0 430 280" preserveAspectRatio="none">
+            <!-- Capa 4: Solapa superior triangular con Sello de Lacre 3D -->
+            <div id="envelopeFlap" class="envelope-top-flap absolute top-0 inset-x-0 h-[58%] z-40">
+              <div class="envelope-flap-front absolute inset-0">
+                <svg class="w-full h-full drop-shadow-md" viewBox="0 0 430 165" preserveAspectRatio="none">
                   <defs>
-                    <linearGradient id="pocketSideGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#fbcfe8" />
-                      <stop offset="100%" stop-color="#f43f5e" />
+                    <linearGradient id="flapLight" x1="0%" y1="0%" x2="50%" y2="100%">
+                      <stop offset="0%" stop-color="#fecdd3" />
+                      <stop offset="60%" stop-color="#fda4af" />
+                      <stop offset="100%" stop-color="#fb7185" />
                     </linearGradient>
-                    <linearGradient id="pocketSideGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#831843" />
+                    <linearGradient id="flapDark" x1="0%" y1="0%" x2="50%" y2="100%">
+                      <stop offset="0%" stop-color="#9f1239" />
+                      <stop offset="70%" stop-color="#881337" />
                       <stop offset="100%" stop-color="#4c0519" />
                     </linearGradient>
-                    <linearGradient id="pocketBottomGradLight" x1="0%" y1="100%" x2="50%" y2="0%">
-                      <stop offset="0%" stop-color="#f43f5e" />
-                      <stop offset="60%" stop-color="#fb7185" />
-                      <stop offset="100%" stop-color="#fecdd3" />
-                    </linearGradient>
-                    <linearGradient id="pocketBottomGradDark" x1="0%" y1="100%" x2="50%" y2="0%">
-                      <stop offset="0%" stop-color="#4c0519" />
-                      <stop offset="60%" stop-color="#881337" />
-                      <stop offset="100%" stop-color="#9f1239" />
-                    </linearGradient>
-                    <filter id="pocketShadow" x="-5%" y="-10%" width="110%" height="120%">
-                      <feDropShadow dx="0" dy="-4" stdDeviation="4" flood-color="rgba(0,0,0,0.15)" />
-                    </filter>
                   </defs>
-                  <path d="M 0,0 L 225,145 L 0,280 Z" fill="url(#pocketSideGradLight)" class="dark:fill-[url(#pocketSideGradDark)]" />
-                  <path d="M 430,0 L 205,145 L 430,280 Z" fill="url(#pocketSideGradLight)" class="dark:fill-[url(#pocketSideGradDark)]" />
-                  <path d="M 0,280 L 215,115 L 430,280 Z" filter="url(#pocketShadow)" fill="url(#pocketBottomGradLight)" class="dark:fill-[url(#pocketBottomGradDark)]" />
+                  <path d="M 0,0 L 430,0 L 215,160 Z" fill="url(#flapLight)" class="dark:fill-[url(#flapDark)]" />
+                  <path d="M 0,0 L 215,160 L 430,0" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
                 </svg>
-
-                <!-- Detalles frontales del sobre: Texto bien contenido en la solapa inferior triangular -->
-                <div id="envelopeFrontLabel" class="absolute inset-0 z-35 flex flex-col justify-between p-4 transition-opacity duration-300 pointer-events-none">
-                  <div class="self-end mr-3 mt-0.5 flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/90 dark:bg-rose-950/85 border border-dashed border-rose-400 shadow-xs backdrop-blur-xs">
-                    <span class="text-[10px]">🌹</span>
-                    <span class="text-[9px] font-mono font-bold tracking-wider text-rose-700 dark:text-rose-200 uppercase">AMOR • 6M</span>
-                  </div>
-
-                  <div class="text-center pb-3.5 sm:pb-4 px-6 sm:px-8">
-                    <p class="font-cursive text-2xl sm:text-3xl text-rose-950 dark:text-rose-100 drop-shadow-xs leading-tight tracking-wide">
-                      Para la mujer de mi vida
-                    </p>
-                  </div>
-                </div>
               </div>
 
-              <!-- Capa 4: Solapa superior triangular con Sello de Lacre 3D -->
-              <div id="envelopeFlap" class="envelope-top-flap absolute top-0 inset-x-0 h-[58%] z-40">
-                <div class="envelope-flap-front absolute inset-0">
-                  <svg class="w-full h-full drop-shadow-md" viewBox="0 0 430 165" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="flapLight" x1="0%" y1="0%" x2="50%" y2="100%">
-                        <stop offset="0%" stop-color="#fecdd3" />
-                        <stop offset="60%" stop-color="#fda4af" />
-                        <stop offset="100%" stop-color="#fb7185" />
-                      </linearGradient>
-                      <linearGradient id="flapDark" x1="0%" y1="0%" x2="50%" y2="100%">
-                        <stop offset="0%" stop-color="#9f1239" />
-                        <stop offset="70%" stop-color="#881337" />
-                        <stop offset="100%" stop-color="#4c0519" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M 0,0 L 430,0 L 215,160 Z" fill="url(#flapLight)" class="dark:fill-[url(#flapDark)]" />
-                    <path d="M 0,0 L 215,160 L 430,0" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
-                  </svg>
-                </div>
-
-                <!-- Sello de cera / lacre rojo en el centro -->
-                <div id="waxSealBadge" class="wax-seal-luxury absolute left-1/2 -bottom-5 -translate-x-1/2 z-50">
-                  <span class="relative z-10 font-serif font-bold text-amber-200 tracking-wider text-xl">6M</span>
-                </div>
+              <!-- Sello de cera / lacre rojo en el centro -->
+              <div id="waxSealBadge" class="wax-seal-luxury absolute left-1/2 -bottom-5 -translate-x-1/2 z-50">
+                <span class="relative z-10 font-serif font-bold text-amber-200 tracking-wider text-xl">6M</span>
               </div>
-
-            </div>
-          </div>
-        </div><!-- /envelope-camera-viewport -->
-
-        <!-- 2. EL CONTENIDO REAL DE LA PÁGINA QUE EMERGE DE ADENTRO (HERO & CONTADOR EN VIVO) -->
-        <div id="heroEmergingContent" class="relative z-30 w-full max-w-4xl mx-auto text-center px-4 py-4 sm:py-6 opacity-0 pointer-events-none will-change-transform" style="transform: translateY(70px) scale(0.88);">
-          
-          <!-- Insignia romántica con glassmorphism -->
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-900/60 text-rose-300 text-xs font-bold tracking-wide mb-3 border border-rose-800 shadow-md backdrop-blur-sm">
-            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping inline-block"></span>
-            <span>✨ 6 Meses de Pura Magia ✨</span>
-          </div>
-
-          <!-- Título principal con gradiente multicolor luxury -->
-          <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-rose-100 leading-[1.1] drop-shadow-sm">
-            Felices 6 Meses, <br>
-            <span id="heroGirlName" class="font-handwriting text-4xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 drop-shadow-none">
-              Mi Princesa
-            </span>
-          </h1>
-
-          <p id="heroSubtitle" class="mt-3 text-sm sm:text-base text-rose-900/75 dark:text-rose-200/75 max-w-lg mx-auto font-light leading-relaxed">
-            Medio año construyendo el rincón más bonito del mundo: nuestro amor. Cada día que pasa me convenzo más de que eres lo mejor que me ha pasado.
-          </p>
-
-          <!-- TARJETA DEL CONTADOR EN TIEMPO REAL — Glass luxury card -->
-          <div class="mt-5 sm:mt-6 w-full rounded-3xl p-4 sm:p-6 relative overflow-hidden"
-            style="background: linear-gradient(135deg, rgba(50,18,30,0.85) 0%, rgba(28,10,18,0.78) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 20px 50px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);">
-            <!-- Decoración de fondo de la tarjeta -->
-            <div class="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
-              <div class="absolute -top-6 -right-6 w-24 h-24 bg-rose-400/10 rounded-full blur-2xl"></div>
-              <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-amber-300/15 rounded-full blur-xl"></div>
             </div>
 
-            <div class="relative">
-              <div class="flex items-center justify-between mb-4 pb-3 border-b border-rose-900/50">
-                <div class="flex items-center gap-1.5 text-rose-300 text-[11px] font-bold uppercase tracking-widest">
-                  <svg class="w-3.5 h-3.5 fill-current text-rose-500 animate-pulse-soft" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
-                  <span>Tiempo juntos en este mundo</span>
-                </div>
-                <span class="inline-flex items-center gap-1 text-[10px] font-bold text-rose-600 bg-rose-900/50 px-2.5 py-0.5 rounded-full">
-                  <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span>
-                  En vivo
-                </span>
-              </div>
-
-              <!-- 4 Cajas del tiempo — Luxury style -->
-              <div class="grid grid-cols-4 gap-2 sm:gap-3">
-                <div class="rounded-2xl p-2.5 sm:p-3 text-center" style="background: rgba(30,10,20,0.6); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);">
-                  <span id="counterDays" class="block font-serif text-2xl sm:text-4xl font-extrabold text-rose-300 leading-none">180</span>
-                  <span class="text-[9px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-1 block">Días</span>
-                </div>
-                <div class="rounded-2xl p-2.5 sm:p-3 text-center" style="background: rgba(30,10,20,0.6); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);">
-                  <span id="counterHours" class="block font-serif text-2xl sm:text-4xl font-extrabold text-rose-300 leading-none">00</span>
-                  <span class="text-[9px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-1 block">Horas</span>
-                </div>
-                <div class="rounded-2xl p-2.5 sm:p-3 text-center" style="background: rgba(30,10,20,0.6); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);">
-                  <span id="counterMinutes" class="block font-serif text-2xl sm:text-4xl font-extrabold text-rose-300 leading-none">00</span>
-                  <span class="text-[9px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-1 block">Min</span>
-                </div>
-                <div class="rounded-2xl p-2.5 sm:p-3 text-center" style="background: linear-gradient(135deg, rgba(76,5,25,0.7), rgba(43,16,27,0.6)); border: 1px solid rgba(244,63,94,0.35); box-shadow: 0 4px 16px rgba(225,29,72,0.2), inset 0 1px 0 rgba(255,255,255,0.05);">
-                  <span id="counterSeconds" class="block font-serif text-2xl sm:text-4xl font-extrabold text-rose-400 leading-none" style="animation: pulseSoft 1s ease-in-out infinite;">00</span>
-                  <span class="text-[9px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-1 block">Seg</span>
-                </div>
-              </div>
-
-              <!-- Estadísticas secundarias -->
-              <div class="mt-4 pt-3 border-t border-rose-900/50 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-                <div class="p-1.5">
-                  <span class="text-[10px] text-rose-500/80 font-medium block">Horas riendo</span>
-                  <span id="statHours" class="font-bold text-rose-200 text-xs sm:text-sm">+4,320 hrs</span>
-                </div>
-                <div class="p-1.5">
-                  <span class="text-[10px] text-rose-500/80 font-medium block">Latidos por ti</span>
-                  <span id="statBeats" class="font-bold text-rose-200 text-xs sm:text-sm">~18M 💓</span>
-                </div>
-                <div class="p-1.5">
-                  <span class="text-[10px] text-rose-500/80 font-medium block">Sonrisas</span>
-                  <span class="font-bold text-rose-200 text-xs sm:text-sm">Infinitas ✨</span>
-                </div>
-                <div class="p-1.5">
-                  <span class="text-[10px] text-rose-500/80 font-medium block">Certeza</span>
-                  <span class="font-bold text-rose-400 text-xs sm:text-sm">100% ♾️</span>
-                </div>
-              </div>
-
-              <p class="mt-3 text-[11px] text-rose-400/70 font-medium text-center">
-                Juntos oficialmente desde el <span id="displayStartDate" class="font-bold text-rose-300">6 de Septiembre de 2026</span> 🌹
-              </p>
-            </div>
           </div>
-
-          <!-- Botones de Acción Rápida — Luxury pill buttons -->
-          <div class="mt-5 flex flex-wrap justify-center gap-2.5">
-            <a href="#recuerdos" class="px-6 py-2.5 rounded-full font-semibold text-xs sm:text-sm text-white flex items-center gap-2 transition active:scale-95"
-              style="background: linear-gradient(135deg, #e11d48, #f43f5e); box-shadow: 0 6px 20px rgba(225,29,72,0.35), 0 2px 8px rgba(0,0,0,0.1);">
-              <span>📸 Álbum de Fotos</span>
-            </a>
-            <a href="#minijuegos" class="px-6 py-2.5 rounded-full bg-rose-950/60 text-rose-200 font-semibold text-xs sm:text-sm flex items-center gap-2 transition active:scale-95"
-              style="border: 1px solid rgba(244,63,94,0.25); box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
-              <span>🎮 Minijuegos</span>
-            </a>
-            <button onclick="launchSurpriseConfetti()" class="px-6 py-2.5 rounded-full font-semibold text-xs sm:text-sm flex items-center gap-2 transition active:scale-95"
-              style="background: linear-gradient(135deg, #fbbf24, #f97316); border: 1px solid rgba(255,255,255,0.5); color: #4a121a; box-shadow: 0 7px 18px rgba(245,158,11,0.35), inset 0 1px 0 rgba(255,255,255,0.45);">
-              <span>🎉 ¡Celebrar!</span>
-            </button>
-          </div>
-
         </div>
-
-      </div>
+      </div><!-- /envelope-camera-viewport -->
 
       <!-- BOTÓN FLOTANTE INFERIOR: ABRIR CARTA DIRECTO -->
-      <div id="envelopeActionPrompt" class="mt-4 sm:mt-6 flex flex-col items-center gap-1.5 transition-all duration-300 z-10">
+      <div id="envelopeActionPrompt" class="mt-3 sm:mt-5 flex flex-col items-center gap-1.5 transition-all duration-300 z-10">
         <button onclick="openEnvelopeCinematic()" class="px-7 py-3 rounded-full bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 hover:from-rose-700 hover:to-rose-700 text-white font-semibold text-xs sm:text-sm shadow-xl shadow-rose-600/30 transition transform active:scale-95 flex items-center gap-2">
           <span>Abrir mi carta de amor</span> 💌
         </button>
@@ -1073,6 +1031,112 @@
           <span>O desliza hacia abajo</span>
           <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v10.586l3.293-3.293a1 1 0 111.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L9 14.586V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
         </div>
+      </div>
+
+      <!-- 2. EL CONTENIDO REAL DE LA PÁGINA QUE EMERGE DE ADENTRO (HERO & CONTADOR EN VIVO) -->
+      <div id="heroEmergingContent" class="absolute inset-0 z-30 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center px-4 pt-16 sm:pt-20 pb-4 opacity-0 pointer-events-none will-change-transform" style="transform: translateY(70px) scale(0.88);">
+        
+        <!-- Insignia romántica con glassmorphism -->
+        <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-rose-900/60 text-rose-300 text-[10px] sm:text-xs font-bold tracking-wide mb-1.5 sm:mb-3 border border-rose-800 shadow-md backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping inline-block"></span>
+          <span>✨ 6 Meses de Pura Magia ✨</span>
+        </div>
+
+        <!-- Título principal con gradiente multicolor luxury -->
+        <h1 class="font-serif text-2xl sm:text-5xl md:text-6xl font-bold tracking-tight text-rose-100 leading-[1.1] drop-shadow-sm">
+          Felices 6 Meses, <br>
+          <span id="heroGirlName" class="font-handwriting text-3xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 drop-shadow-none">
+            Mi Princesa
+          </span>
+        </h1>
+
+        <p id="heroSubtitle" class="mt-1 sm:mt-3 text-xs sm:text-base text-rose-900/75 dark:text-rose-200/75 max-w-sm sm:max-w-lg mx-auto font-light leading-snug sm:leading-relaxed">
+          Medio año construyendo el rincón más bonito del mundo: nuestro amor. Cada día que pasa me convenzo más de que eres lo mejor que me ha pasado.
+        </p>
+
+        <!-- TARJETA DEL CONTADOR EN TIEMPO REAL — Glass luxury card -->
+        <div class="tarjeta-contador mt-3 sm:mt-6 w-full rounded-2xl sm:rounded-3xl p-3 sm:p-6 relative overflow-hidden"
+          style="background: linear-gradient(135deg, rgba(50,18,30,0.85) 0%, rgba(28,10,18,0.78) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 20px 50px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);">
+          <!-- Decoración de fondo de la tarjeta -->
+          <div class="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+            <div class="absolute -top-6 -right-6 w-24 h-24 bg-rose-400/10 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-amber-300/15 rounded-full blur-xl"></div>
+          </div>
+
+          <div class="relative">
+            <div class="flex items-center justify-between mb-2 sm:mb-4 pb-1.5 sm:pb-3 border-b border-rose-900/50">
+              <div class="flex items-center gap-1.5 text-rose-300 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest">
+                <svg class="w-3.5 h-3.5 fill-current text-rose-500 animate-pulse-soft" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                <span>Tiempo juntos en este mundo</span>
+              </div>
+              <span class="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-bold text-rose-600 bg-rose-900/50 px-2 sm:px-2.5 py-0.5 rounded-full">
+                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span>
+                En vivo
+              </span>
+            </div>
+
+            <!-- 4 Cajas del tiempo — Luxury style -->
+            <div class="grid grid-cols-4 gap-1.5 sm:gap-3">
+              <div class="caja-tiempo rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center" style="background: rgba(30,10,20,0.6); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);">
+                <span id="counterDays" class="numero-tiempo block font-serif text-xl sm:text-4xl font-extrabold text-rose-300 leading-none">180</span>
+                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Días</span>
+              </div>
+              <div class="caja-tiempo rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center" style="background: rgba(30,10,20,0.6); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);">
+                <span id="counterHours" class="numero-tiempo block font-serif text-xl sm:text-4xl font-extrabold text-rose-300 leading-none">00</span>
+                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Horas</span>
+              </div>
+              <div class="caja-tiempo rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center" style="background: rgba(30,10,20,0.6); border: 1px solid rgba(225,29,72,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);">
+                <span id="counterMinutes" class="numero-tiempo block font-serif text-xl sm:text-4xl font-extrabold text-rose-300 leading-none">00</span>
+                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Min</span>
+              </div>
+              <div class="caja-tiempo rounded-xl sm:rounded-2xl p-2 sm:p-3 text-center" style="background: linear-gradient(135deg, rgba(76,5,25,0.7), rgba(43,16,27,0.6)); border: 1px solid rgba(244,63,94,0.35); box-shadow: 0 4px 16px rgba(225,29,72,0.2), inset 0 1px 0 rgba(255,255,255,0.05);">
+                <span id="counterSeconds" class="numero-tiempo block font-serif text-xl sm:text-4xl font-extrabold text-rose-400 leading-none" style="animation: pulseSoft 1s ease-in-out infinite;">00</span>
+                <span class="etiqueta-tiempo text-[8px] sm:text-[11px] font-bold text-rose-500 uppercase tracking-widest mt-0.5 sm:mt-1 block">Seg</span>
+              </div>
+            </div>
+
+            <!-- Estadísticas secundarias -->
+            <div class="fila-estadisticas mt-2.5 sm:mt-4 pt-2 sm:pt-3 border-t border-rose-900/50 grid grid-cols-4 gap-1 sm:gap-2 text-center">
+              <div class="p-1">
+                <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Horas riendo</span>
+                <span id="statHours" class="stat-val font-bold text-rose-200 text-[10px] sm:text-sm">+4,320 hrs</span>
+              </div>
+              <div class="p-1">
+                <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Latidos por ti</span>
+                <span id="statBeats" class="stat-val font-bold text-rose-200 text-[10px] sm:text-sm">~18M 💓</span>
+              </div>
+              <div class="p-1">
+                <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Sonrisas</span>
+                <span class="stat-val font-bold text-rose-200 text-[10px] sm:text-sm">Infinitas ✨</span>
+              </div>
+              <div class="p-1">
+                <span class="stat-label text-[8px] sm:text-[10px] text-rose-500/80 font-medium block">Certeza</span>
+                <span class="stat-val font-bold text-rose-400 text-[10px] sm:text-sm">100% ♾️</span>
+              </div>
+            </div>
+
+            <p class="mt-2 sm:mt-3 text-[10px] sm:text-[11px] text-rose-400/70 font-medium text-center">
+              Juntos oficialmente desde el <span id="displayStartDate" class="font-bold text-rose-300">8 de marzo de 2026</span> 🌹
+            </p>
+          </div>
+        </div>
+
+        <!-- Botones de Acción Rápida — Luxury pill buttons -->
+        <div class="botones-accion mt-3 sm:mt-5 flex flex-wrap justify-center gap-2 sm:gap-2.5">
+          <a href="#recuerdos" class="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm text-white flex items-center gap-2 transition active:scale-95"
+            style="background: linear-gradient(135deg, #e11d48, #f43f5e); box-shadow: 0 6px 20px rgba(225,29,72,0.35), 0 2px 8px rgba(0,0,0,0.1);">
+            <span>📸 Álbum de Fotos</span>
+          </a>
+          <a href="#minijuegos" class="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-rose-950/60 text-rose-200 font-semibold text-xs sm:text-sm flex items-center gap-2 transition active:scale-95"
+            style="border: 1px solid rgba(244,63,94,0.25); box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
+            <span>🎮 Minijuegos</span>
+          </a>
+          <button onclick="launchSurpriseConfetti()" class="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm flex items-center gap-2 transition active:scale-95"
+            style="background: linear-gradient(135deg, #fbbf24, #f97316); border: 1px solid rgba(255,255,255,0.5); color: #4a121a; box-shadow: 0 7px 18px rgba(245,158,11,0.35), inset 0 1px 0 rgba(255,255,255,0.45);">
+            <span>🎉 ¡Celebrar!</span>
+          </button>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1776,7 +1840,7 @@
       girlName: "Mi Princesa",
       boyName: "Tu Amor",
       whatsappNumber: "573115537459",
-      startDate: "2026-03-08T00:00:00",
+      startDate: "2026-03-09T00:00:00",
       anniversaryMonths: 6,
       subtitle: "Medio año construyendo el rincón más bonito del mundo: nuestro amor. Cada día a tu lado supera al anterior.",
 
@@ -2058,6 +2122,9 @@
             if (hasOldUnsplash || parsed.polaroids.length < 7 || parsed.polaroids.some(p => p.url && p.url.startsWith('data:image'))) {
               parsed.polaroids = DEFAULT_CONFIG.polaroids;
             }
+          }
+          if (parsed.startDate === "2026-03-08T00:00:00") {
+            parsed.startDate = "2026-03-09T00:00:00";
           }
           return { ...DEFAULT_CONFIG, ...parsed };
         }
